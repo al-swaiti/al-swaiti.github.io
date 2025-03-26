@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<!--
+    Portfolio Website
+    Copyright (c) 2024 Abdallah Alswaiti. All rights reserved.
+    
+    This website and its contents are protected by copyright law.
+    Unauthorized use, copying, or distribution without permission is prohibited.
+    
+    Contact: abedalswaity7@gmail.com
+-->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -1821,6 +1830,46 @@
             }
         });
     </script>
+    
+    <!-- Copyright protection script -->
+    <script>
+        // Basic protection against copying
+        document.addEventListener('DOMContentLoaded', function() {
+            // Disable right-click
+            document.addEventListener('contextmenu', function(e) {
+                console.log("© 2024 Abdallah Alswaiti. All Rights Reserved.");
+                e.preventDefault();
+                alert("© 2024 Abdallah Alswaiti. This content is protected by copyright law.");
+                return false;
+            });
+            
+            // Disable keyboard shortcuts for copying
+            document.addEventListener('keydown', function(e) {
+                // Disable Ctrl+C, Ctrl+U (view source), Ctrl+S (save)
+                if ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 'u' || e.key === 's')) {
+                    e.preventDefault();
+                    alert("© 2024 Abdallah Alswaiti. This content is protected by copyright law.");
+                    return false;
+                }
+                
+                // Disable F12 key (developer tools)
+                if (e.key === 'F12') {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+            
+            // Add invisible watermark with ownership information
+            const watermark = document.createElement('div');
+            watermark.style.display = 'none';
+            watermark.innerHTML = '<!-- This website is created by Abdallah Alswaiti. © 2024 All Rights Reserved. -->';
+            document.body.appendChild(watermark);
+            
+            // Console warning
+            console.log("%c© 2024 Abdallah Alswaiti", "font-size:20px; color:red; font-weight:bold");
+            console.log("%cThis website and its contents are protected by copyright law.", "font-size:14px");
+        });
+    </script>
 </body>
 </html>
-<!-- Updated portfolio site: Wed Mar 26 03:08:00 AM CET 2025 -->
+<!-- Updated portfolio site: Wed Jun 26 21:31:36 CEST 2024 -->

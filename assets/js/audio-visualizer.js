@@ -1,3 +1,13 @@
+/**
+ * Audio Visualizer and Music Reactive Effects
+ * Copyright (c) 2024 Abdallah Alswaiti. All rights reserved.
+ * 
+ * This file and its contents are protected by copyright law.
+ * Unauthorized use, copying, or distribution without permission is prohibited.
+ * 
+ * Contact: abedalswaity7@gmail.com
+ */
+
 // Audio Visualizer and Music Reactive Effects
 document.addEventListener('DOMContentLoaded', function() {
     // Get DOM elements
