@@ -8,15 +8,32 @@
  * Contact: abedalswaity7@gmail.com
  */
 
-/* Base Styles */
+/* Color Theory Based Variables */
 :root {
-  --primary-color: #00f0ff;
-  --secondary-color: #ff00e6;
-  --background-color: #0a0a0a;
-  --terminal-bg: rgba(0, 10, 20, 0.85);
-  --terminal-text: #00f0ff;
-  --glass-effect: rgba(255, 255, 255, 0.1);
-  --backdrop-filter: blur(10px);
+  /* Primary Colors */
+  --primary-color: #00f7ff; /* Cyan - Main brand color, slightly more saturated */
+  --secondary-color: #ff00d4; /* Magenta - Complementary to cyan */
+  --accent-color: #14ff00; /* Electric Green - Split complementary */
+  
+  /* Supporting Colors */
+  --terminal-text: #e2f3f5; /* Soft cyan for better readability */
+  --terminal-bg: rgba(8, 12, 24, 0.85); /* Deep blue-black for depth */
+  --terminal-header: rgba(13, 17, 33, 0.95); /* Slightly lighter than bg */
+  
+  /* Gradients and Effects */
+  --glass-effect: rgba(255, 255, 255, 0.07);
+  --backdrop-filter: blur(12px);
+  
+  /* Neon Effects */
+  --neon-glow-primary: 0 0 10px rgba(0, 247, 255, 0.8),
+                       0 0 20px rgba(0, 247, 255, 0.5),
+                       0 0 30px rgba(0, 247, 255, 0.3);
+  --neon-glow-secondary: 0 0 10px rgba(255, 0, 212, 0.8),
+                         0 0 20px rgba(255, 0, 212, 0.5),
+                         0 0 30px rgba(255, 0, 212, 0.3);
+  --neon-glow-accent: 0 0 10px rgba(20, 255, 0, 0.8),
+                      0 0 20px rgba(20, 255, 0, 0.5),
+                      0 0 30px rgba(20, 255, 0, 0.3);
   --neon-glow: 0 0 10px rgba(0, 240, 255, 0.8), 0 0 20px rgba(0, 240, 255, 0.5), 0 0 30px rgba(0, 240, 255, 0.3);
   --neon-glow-2: 0 0 10px rgba(255, 0, 230, 0.8), 0 0 20px rgba(255, 0, 230, 0.5), 0 0 30px rgba(255, 0, 230, 0.3);
   --neon-glow-3: 0 0 10px rgba(153, 0, 255, 0.8), 0 0 20px rgba(153, 0, 255, 0.5), 0 0 30px rgba(153, 0, 255, 0.3);
@@ -152,17 +169,17 @@ body {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  border: 3px solid rgba(255, 0, 230, 0.9);
+  border: 3px solid var(--secondary-color);
   transform: translate(-50%, -50%);
   animation: pulse-rings 3s linear infinite;
-  box-shadow: 0 0 15px #ff00e6, 0 0 25px #ff00e6, 0 0 35px #ff00e6;
+  box-shadow: var(--neon-glow-secondary);
   z-index: -1;
 }
 
 .profile-image::after {
   animation-delay: 1.5s;
-  border-color: rgba(0, 240, 255, 0.9);
-  box-shadow: 0 0 15px #00f0ff, 0 0 25px #00f0ff, 0 0 35px #00f0ff;
+  border-color: var(--primary-color);
+  box-shadow: var(--neon-glow-primary);
 }
 
 .profile-image img {
@@ -200,17 +217,17 @@ body {
   0% {
     opacity: 0.7;
     transform: translate(-50%, -50%) scale(1);
-    box-shadow: 0 0 15px var(--primary-color), 0 0 30px var(--primary-color);
+    box-shadow: var(--neon-glow-primary);
   }
   50% {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1.05);
-    box-shadow: 0 0 20px var(--primary-color), 0 0 40px var(--primary-color);
+    box-shadow: var(--neon-glow-secondary);
   }
   100% {
-    opacity: 0.9;
+    opacity: 0.7;
     transform: translate(-50%, -50%) scale(0.98);
-    box-shadow: 0 0 10px var(--primary-color), 0 0 25px var(--primary-color);
+    box-shadow: var(--neon-glow-primary);
   }
 }
 
@@ -260,13 +277,13 @@ body {
   width: 80%;
   max-width: 800px;
   height: 400px;
-  background-color: rgba(0, 10, 20, 0.85); /* Increased opacity for better readability */
+  background-color: var(--terminal-bg);
   border-radius: 10px;
   overflow: hidden;
   backdrop-filter: var(--backdrop-filter);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 20px rgba(0, 247, 255, 0.2);
   z-index: 100;
-  border: 1px solid var(--glass-effect);
+  border: 1px solid var(--primary-color);
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   animation: terminal-glow 10s infinite alternate;
@@ -274,20 +291,20 @@ body {
 
 @keyframes terminal-glow {
   0% {
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
-    border-color: rgba(0, 240, 255, 0.3);
+    box-shadow: 0 0 20px rgba(0, 247, 255, 0.2);
+    border-color: rgba(0, 247, 255, 0.3);
   }
   33% {
-    box-shadow: 0 0 20px rgba(255, 0, 230, 0.2);
-    border-color: rgba(255, 0, 230, 0.3);
+    box-shadow: 0 0 20px rgba(255, 0, 212, 0.2);
+    border-color: rgba(255, 0, 212, 0.3);
   }
   66% {
-    box-shadow: 0 0 20px rgba(153, 0, 255, 0.2);
-    border-color: rgba(153, 0, 255, 0.3);
+    box-shadow: 0 0 20px rgba(20, 255, 0, 0.2);
+    border-color: rgba(20, 255, 0, 0.3);
   }
   100% {
-    box-shadow: 0 0 20px rgba(0, 153, 255, 0.2);
-    border-color: rgba(0, 153, 255, 0.3);
+    box-shadow: 0 0 20px rgba(0, 247, 255, 0.2);
+    border-color: rgba(0, 247, 255, 0.3);
   }
 }
 
@@ -311,8 +328,8 @@ body:has(.profile-image.main-title) .terminal-container {
   display: flex;
   align-items: center;
   padding: 10px;
-  background-color: rgba(0, 0, 0, 0.3);
-  border-bottom: 1px solid var(--glass-effect);
+  background-color: var(--terminal-header);
+  border-bottom: 1px solid var(--primary-color);
 }
 
 .terminal-buttons {
@@ -349,12 +366,12 @@ body:has(.profile-image.main-title) .terminal-container {
   padding: 20px;
   height: calc(100% - 40px);
   overflow-y: auto;
-  font-family: 'Orbitron', monospace;
-  font-size: 16px;
+  font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Menlo', monospace;
+  font-size: 0.8rem;
   color: var(--terminal-text);
   line-height: 1.5;
-  letter-spacing: 0.5px;
-  text-shadow: 0 0 2px var(--terminal-text);
+  letter-spacing: 0.3px;
+  text-shadow: 0 0 2px rgba(226, 243, 245, 0.5);
 }
 
 .cursor {
@@ -515,7 +532,7 @@ body:has(.profile-image.main-title) .terminal-container {
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: var(--terminal-bg);
   border: 2px solid var(--secondary-color);
   display: flex;
   flex-direction: column;
@@ -537,7 +554,7 @@ body:has(.profile-image.main-title) .terminal-container {
 .node-label {
   font-family: 'Orbitron', sans-serif;
   font-size: 10px;
-  color: white;
+  color: var(--terminal-text);
   text-align: center;
 }
 
@@ -1183,32 +1200,32 @@ body:has(.profile-image.main-title) .terminal-container {
 .audio-ring-1 {
   width: 110%;
   height: 110%;
-  border: 2px solid hsl(180, 100%, 70%);
-  box-shadow: 0 0 10px hsl(180, 100%, 70%);
+  border: 2px solid var(--primary-color);
+  box-shadow: var(--neon-glow-primary);
   animation: audio-pulse 2s infinite;
 }
 
 .audio-ring-2 {
   width: 130%;
   height: 130%;
-  border: 2px solid hsl(280, 100%, 70%);
-  box-shadow: 0 0 10px hsl(280, 100%, 70%);
+  border: 2px solid var(--secondary-color);
+  box-shadow: var(--neon-glow-secondary);
   animation: audio-pulse 2s infinite 0.3s;
 }
 
 .audio-ring-3 {
   width: 150%;
   height: 150%;
-  border: 2px solid hsl(320, 100%, 70%);
-  box-shadow: 0 0 10px hsl(320, 100%, 70%);
+  border: 2px solid var(--accent-color);
+  box-shadow: var(--neon-glow-accent);
   animation: audio-pulse 2s infinite 0.6s;
 }
 
 .audio-ring-4 {
   width: 170%;
   height: 170%;
-  border: 2px solid hsl(220, 100%, 70%);
-  box-shadow: 0 0 10px hsl(220, 100%, 70%);
+  border: 2px solid var(--primary-color);
+  box-shadow: var(--neon-glow-primary);
   animation: audio-pulse 2s infinite 0.9s;
 }
 
@@ -1303,9 +1320,12 @@ body:has(.profile-image.main-title) .terminal-container {
   top: 50%;
   left: 50%;
   height: 3px;
-  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+  background: linear-gradient(90deg, 
+    var(--primary-color) 0%,
+    var(--secondary-color) 100%
+  );
   transform-origin: left center;
-  box-shadow: 0 0 8px var(--primary-color);
+  box-shadow: var(--neon-glow-primary);
   z-index: 203;
   overflow: visible;
   --data-pulse-opacity: 0.8;
@@ -1376,7 +1396,7 @@ body:has(.profile-image.main-title) .terminal-container {
   height: 6px;
   background-color: var(--primary-color);
   border-radius: 50%;
-  box-shadow: 0 0 8px var(--primary-color);
+  box-shadow: var(--neon-glow-primary);
   z-index: 204;
   animation: node-pulse var(--electric-pulse-speed) infinite alternate;
 }
@@ -1384,11 +1404,11 @@ body:has(.profile-image.main-title) .terminal-container {
 @keyframes node-pulse {
   0%, 100% {
     transform: scale(1);
-    box-shadow: 0 0 8px var(--primary-color);
+    box-shadow: var(--neon-glow-primary);
   }
   50% {
     transform: scale(1.3);
-    box-shadow: 0 0 12px var(--primary-color);
+    box-shadow: var(--neon-glow-secondary);
   }
 }
 
@@ -1527,3 +1547,6 @@ body:has(.profile-image.main-title) .terminal-container {
     opacity: 0;
   }
 }
+
+/* Import modern monospace fonts */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Fira+Code:wght@300;400;500&display=swap');

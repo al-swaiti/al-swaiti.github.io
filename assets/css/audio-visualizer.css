@@ -15,17 +15,34 @@
   cursor: pointer;
   z-index: 100;
   transition: all 0.3s ease;
+  border: 2px solid var(--primary-color);
+  background: var(--terminal-bg);
+  box-shadow: var(--neon-glow-primary);
 }
 
 .audio-control:hover {
   background-color: rgba(0, 0, 0, 0.9);
-  box-shadow: 0 0 10px var(--primary-color);
+  box-shadow: var(--neon-glow-secondary);
   transform: scale(1.05);
+  border-color: var(--secondary-color);
 }
 
 .audio-control.active {
   background-color: rgba(0, 0, 0, 0.9);
-  box-shadow: 0 0 15px var(--primary-color);
+  box-shadow: var(--neon-glow-accent);
+  border-color: var(--accent-color);
+}
+
+.audio-control.muted {
+  border-color: #666;
+  box-shadow: none;
+  opacity: 0.7;
+}
+
+.audio-control.muted:hover {
+  border-color: var(--primary-color);
+  box-shadow: var(--neon-glow-primary);
+  opacity: 1;
 }
 
 .equalizer-icon {
@@ -47,6 +64,7 @@
   position: relative;
   transition: height 0.1s ease, background-color 0.3s ease, box-shadow 0.3s ease;
   transform-origin: bottom;
+  box-shadow: var(--neon-glow-primary);
 }
 
 /* Add active spikes to the tops of bars */
@@ -185,11 +203,11 @@
   text-align: left;
   border-radius: 12px;
   overflow: hidden;
-  background: rgba(10, 10, 15, 0.5);
+  background: var(--terminal-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
-  border: 2px solid #ec4899; /* Match text color */
+  box-shadow: var(--neon-glow-primary);
+  border: 2px solid var(--primary-color);
   animation: border-pulse 5s infinite alternate; /* Matching animation */
   font-family: 'Orbitron', sans-serif;
   display: flex;
@@ -201,10 +219,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(15, 15, 20, 0.6);
+  background: var(--terminal-header);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border-bottom: 2px solid #ec4899; /* Match text color */
+  border-bottom: 2px solid var(--primary-color);
   padding: 10px 15px;
   height: 30px;
   animation: border-pulse 5s infinite alternate; /* Matching animation */
@@ -261,16 +279,15 @@
 
 /* Terminal Text */
 #terminal-text {
-  padding: 20px;
-  color: #ec4899;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 400;
-  letter-spacing: 0.5px;
-  line-height: 1.6;
+  padding: 15px;
+  color: var(--terminal-text);
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.3px;
+  line-height: 1.4;
   overflow-y: auto;
   height: 100%;
-  text-shadow: 0 0 8px rgba(236, 72, 153, 0.5);
+  text-shadow: 0 0 2px rgba(226, 243, 245, 0.3);
   animation: text-color-pulse 5s infinite alternate;
 }
 
@@ -476,7 +493,7 @@
 /* Terminal Text */
 #terminal-text {
   padding: 15px;
-  color: #ec4899; /* Maintain the pink color */
+  color: var(--terminal-text);
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
   font-size: 0.85rem;
   letter-spacing: 0.5px;
@@ -668,3 +685,44 @@
 }
 
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+/* Audio Visualizer Elements */
+.equalizer-bar.active {
+  background: var(--secondary-color);
+  box-shadow: var(--neon-glow-secondary);
+}
+
+.equalizer-bar.peak {
+  background: var(--accent-color);
+  box-shadow: var(--neon-glow-accent);
+}
+
+/* Frequency Visualization */
+.frequency-bar {
+  background: linear-gradient(180deg,
+    var(--primary-color) 0%,
+    var(--secondary-color) 50%,
+    var(--accent-color) 100%
+  );
+  box-shadow: var(--neon-glow-primary);
+}
+
+.frequency-bar.active {
+  background: linear-gradient(180deg,
+    var(--accent-color) 0%,
+    var(--secondary-color) 50%,
+    var(--primary-color) 100%
+  );
+  box-shadow: var(--neon-glow-secondary);
+}
+
+/* Wave Visualization */
+.wave-canvas {
+  stroke: var(--primary-color);
+  filter: drop-shadow(0 0 5px var(--primary-color));
+}
+
+.wave-canvas.active {
+  stroke: var(--secondary-color);
+  filter: drop-shadow(0 0 5px var(--secondary-color));
+}

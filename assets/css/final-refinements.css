@@ -1,26 +1,37 @@
 /* Final Terminal and CPU Animations CSS */
 :root {
-  --primary-color: #00f0ff;
-  --secondary-color: #ff00e6;
-  --tertiary-color: #39ff14; /* Electric green */
-  --quaternary-color: #ffcc00; /* Amber */
-  --terminal-text: #16d9c5; /* Updated terminal text color as requested */
-  --circuit-color: #00f0ff;
-  --pulse-color: #39ff14; /* Electric green for pulses */
-  --background-color: #0a0a0a;
-  --terminal-bg: rgba(10, 10, 10, 0.8);
-  --glass-effect: rgba(255, 255, 255, 0.1);
-  --neon-glow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color), 0 0 30px var(--primary-color);
-  --neon-glow-secondary: 0 0 10px var(--secondary-color), 0 0 20px var(--secondary-color), 0 0 30px var(--secondary-color);
-  --neon-glow-tertiary: 0 0 10px var(--tertiary-color), 0 0 20px var(--tertiary-color), 0 0 30px var(--tertiary-color);
-  --neon-glow-quaternary: 0 0 10px var(--quaternary-color), 0 0 20px var(--quaternary-color), 0 0 30px var(--quaternary-color);
-  --terminal-glow: 0 0 10px var(--terminal-text), 0 0 20px var(--terminal-text), 0 0 30px var(--terminal-text);
+  /* Primary Colors */
+  --primary-color: #00f7ff; /* Cyan - Main brand color */
+  --secondary-color: #ff00d4; /* Magenta - Complementary */
+  --accent-color: #14ff00; /* Electric Green - Split complementary */
+  --quaternary-color: #ffcc00; /* Amber - Accent */
+  
+  /* Terminal Colors */
+  --terminal-text: #e2f3f5;
+  --terminal-bg: rgba(8, 12, 24, 0.85);
+  --terminal-header: rgba(13, 17, 33, 0.95);
+  
+  /* Effects */
+  --glass-effect: rgba(255, 255, 255, 0.07);
+  --backdrop-filter: blur(12px);
+  
+  /* Neon Effects */
+  --neon-glow-primary: 0 0 10px rgba(0, 247, 255, 0.8),
+                       0 0 20px rgba(0, 247, 255, 0.5),
+                       0 0 30px rgba(0, 247, 255, 0.3);
+  --neon-glow-secondary: 0 0 10px rgba(255, 0, 212, 0.8),
+                         0 0 20px rgba(255, 0, 212, 0.5),
+                         0 0 30px rgba(255, 0, 212, 0.3);
+  --neon-glow-accent: 0 0 10px rgba(20, 255, 0, 0.8),
+                      0 0 20px rgba(20, 255, 0, 0.5),
+                      0 0 30px rgba(20, 255, 0, 0.3);
 }
 
-/* Updated Terminal Styling */
+/* Updated Terminal Content */
 .terminal-content {
   color: var(--terminal-text);
-  text-shadow: var(--terminal-glow);
+  text-shadow: var(--neon-glow-primary);
+  background: var(--terminal-bg);
   font-family: 'JetBrains Mono', 'Fira Code', 'Roboto Mono', monospace;
   font-size: 14px;
   line-height: 1.6;
@@ -30,10 +41,10 @@
 
 .cursor {
   background-color: var(--terminal-text);
-  box-shadow: var(--terminal-glow);
+  box-shadow: var(--neon-glow-primary);
 }
 
-/* Updated CPU Design - No transparency and bass-reactive */
+/* Enhanced CPU Design */
 .profile-image.centered {
   position: fixed;
   bottom: auto;
@@ -44,9 +55,9 @@
   height: 120px;
   z-index: 150;
   transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-  background-color: rgba(0, 0, 0, 1); /* Solid background, no transparency */
+  background-color: var(--terminal-bg);
   border: 2px solid var(--primary-color);
-  box-shadow: var(--neon-glow);
+  box-shadow: var(--neon-glow-primary);
   overflow: visible;
 }
 
@@ -62,17 +73,17 @@
 @keyframes bass-pulse-animation {
   0% {
     transform: translate(-50%, -50%) scale(1);
-    box-shadow: var(--neon-glow);
+    box-shadow: var(--neon-glow-primary);
     border-color: var(--primary-color);
   }
   50% {
     transform: translate(-50%, -50%) scale(1.15);
-    box-shadow: 0 0 20px var(--tertiary-color), 0 0 40px var(--tertiary-color), 0 0 60px var(--tertiary-color);
-    border-color: var(--tertiary-color);
+    box-shadow: 0 0 20px var(--accent-color), 0 0 40px var(--accent-color), 0 0 60px var(--accent-color);
+    border-color: var(--accent-color);
   }
   100% {
     transform: translate(-50%, -50%) scale(1);
-    box-shadow: var(--neon-glow);
+    box-shadow: var(--neon-glow-primary);
     border-color: var(--primary-color);
   }
 }
@@ -105,8 +116,8 @@
   position: absolute;
   width: 30px;
   height: 3px;
-  background: linear-gradient(90deg, transparent, var(--tertiary-color), var(--quaternary-color), var(--tertiary-color), transparent);
-  box-shadow: 0 0 15px var(--tertiary-color), 0 0 30px var(--tertiary-color);
+  background: linear-gradient(90deg, transparent, var(--accent-color), var(--quaternary-color), var(--accent-color), transparent);
+  box-shadow: 0 0 15px var(--accent-color), 0 0 30px var(--accent-color);
   opacity: 1;
   z-index: 142;
 }
@@ -120,6 +131,76 @@
   box-shadow: inset 0 0 10px rgba(0, 240, 255, 0.1);
   z-index: 139;
   transition: all 0.3s ease;
+}
+
+/* Circuit Paths */
+.circuit-path {
+  stroke: var(--primary-color);
+  filter: drop-shadow(0 0 5px var(--primary-color));
+}
+
+.circuit-path.active {
+  stroke: var(--secondary-color);
+  filter: drop-shadow(0 0 5px var(--secondary-color));
+}
+
+/* Node Connections */
+.node-connection {
+  background: linear-gradient(90deg,
+    var(--primary-color) 0%,
+    var(--secondary-color) 100%
+  );
+  box-shadow: var(--neon-glow-primary);
+}
+
+.node-connection.active {
+  background: linear-gradient(90deg,
+    var(--accent-color) 0%,
+    var(--secondary-color) 100%
+  );
+  box-shadow: var(--neon-glow-accent);
+}
+
+/* Data Flow Animation */
+.data-particle {
+  background: var(--primary-color);
+  box-shadow: var(--neon-glow-primary);
+}
+
+.data-particle.active {
+  background: var(--secondary-color);
+  box-shadow: var(--neon-glow-secondary);
+}
+
+/* Enhanced Animations */
+@keyframes circuit-pulse {
+  0% {
+    filter: drop-shadow(0 0 2px var(--primary-color));
+    opacity: 0.7;
+  }
+  50% {
+    filter: drop-shadow(0 0 8px var(--secondary-color));
+    opacity: 1;
+  }
+  100% {
+    filter: drop-shadow(0 0 2px var(--primary-color));
+    opacity: 0.7;
+  }
+}
+
+@keyframes node-highlight {
+  0% {
+    border-color: var(--primary-color);
+    box-shadow: var(--neon-glow-primary);
+  }
+  50% {
+    border-color: var(--secondary-color);
+    box-shadow: var(--neon-glow-secondary);
+  }
+  100% {
+    border-color: var(--primary-color);
+    box-shadow: var(--neon-glow-primary);
+  }
 }
 
 /* Font imports for terminal */
