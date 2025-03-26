@@ -1,6 +1,6 @@
 /**
  * Audio Visualizer and Music Reactive Effects
- * Copyright (c) 2024 Abdallah Alswaiti. All rights reserved.
+ * Copyright (c) 2025 Abdallah Alswaiti. All rights reserved.
  * 
  * This file and its contents are protected by copyright law.
  * Unauthorized use, copying, or distribution without permission is prohibited.

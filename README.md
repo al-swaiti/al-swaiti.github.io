@@ -1,25 +1,26 @@
 # Abdallah Alswaiti - Portfolio
 
-This is the personal portfolio website for Abdallah Alswaiti, showcasing skills and experience as a Linux System Engineer and educator.
+This is the advanced portfolio website for Abdallah Alswaiti, showcasing expertise as a Linux System Engineer, Physics Educator, and AI/Robotics specialist.
 
 ## Features
 
-- Interactive intro video
-- Terminal-based portfolio interface
-- CPU-inspired navigation with mindmap
-- Audio-reactive elements and visualizations
-- Project showcase with timeline entries
+- Interactive intro video with immersive experience
+- Terminal-based interactive portfolio interface
+- CPU-inspired navigation with dynamic mindmap visualization
+- Real-time audio-reactive elements and visualizations
+- Comprehensive project showcase with detailed timeline entries
 
 ## Technologies Used
 
-- HTML5
-- CSS3 (with advanced animations)
-- JavaScript (vanilla)
-- Audio Web API for sound visualizations
+- HTML5 with modern semantic elements
+- CSS3 with advanced animations and responsive design
+- Vanilla JavaScript with audio visualization
+- Web Audio API for real-time sound processing and visualization
+- Canvas-based dynamic graphics
 
 ## Copyright Notice
 
-© 2024 Abdallah Alswaiti. All rights reserved.
+© 2025 Abdallah Alswaiti. All rights reserved.
 
 This website and all its contents (including but not limited to text, images, code, design, and audio-visual elements) are protected by copyright law. Unauthorized copying, redistribution, or reproduction of any part of this website without express written permission is strictly prohibited.
 
