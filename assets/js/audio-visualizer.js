@@ -236,32 +236,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     pulse.style.height = '3px';
                 }
             });
-            
-            // Update CPU endpoints
-            const cpuEndpoint = circuit.querySelector('.circuit-cpu-endpoint');
-            if (cpuEndpoint) {
-                // Make CPU react to bass hits with scale
-                const scaleValue = 1 + (bassLevel * 0.3);
-                cpuEndpoint.style.transform = `rotate(45deg) scale(${scaleValue})`;
-                
-                // Adjust glow intensity based on audio levels
-                const glowIntensity = 10 + (bassLevel * 15);
-                cpuEndpoint.style.boxShadow = `0 0 ${glowIntensity}px var(--secondary-color)`;
-                
-                // Adjust the inner core pulse speed
-                const coreEl = cpuEndpoint.querySelector('::after');
-                if (coreEl) {
-                    coreEl.style.animationDuration = `${1.5 - (midLevel * 0.7)}s`;
-                }
-                
-                // Pulsate more intensely on bass peaks
-                if (bassLevel > 0.8) {
-                    cpuEndpoint.classList.add('cpu-peak');
-                    setTimeout(() => {
-                        cpuEndpoint.classList.remove('cpu-peak');
-                    }, 100);
-                }
-            }
         });
     }
     
