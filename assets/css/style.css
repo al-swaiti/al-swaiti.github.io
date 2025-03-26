@@ -162,7 +162,7 @@ body {
   background: #000;
 }
 
-/* Enhanced intense glow effect for profile image - matching the provided image */
+/* Enhanced intense glow effect for profile image */
 .profile-image::before {
   content: '';
   position: absolute;
@@ -174,19 +174,12 @@ body {
   background: radial-gradient(
     circle at center,
     rgba(0, 0, 0, 0.5) 40%,
-    rgba(77, 119, 255, 0.7) 45%, 
-    rgba(77, 119, 255, 0.6) 47%,
-    rgba(255, 0, 230, 0.9) 60%,
-    rgba(255, 0, 230, 0.7) 70%,
+    var(--primary-color) 60%,
     transparent 75%
   );
   transform: translate(-50%, -50%);
   z-index: -1;
-  box-shadow: 
-    0 0 15px rgba(255, 0, 230, 0.9),
-    0 0 30px rgba(255, 0, 230, 0.7),
-    0 0 45px rgba(77, 119, 255, 0.7),
-    0 0 60px rgba(77, 119, 255, 0.5);
+  box-shadow: 0 0 15px var(--primary-color), 0 0 30px var(--primary-color);
   animation: electric-pulse var(--electric-pulse-speed) ease-in-out infinite alternate;
 }
 
@@ -194,34 +187,24 @@ body {
   0% {
     opacity: 0.7;
     transform: translate(-50%, -50%) scale(1);
-    box-shadow: 
-      0 0 15px rgba(255, 0, 230, 0.9),
-      0 0 30px rgba(255, 0, 230, 0.7),
-      0 0 45px rgba(77, 119, 255, 0.7);
+    box-shadow: 0 0 15px var(--primary-color), 0 0 30px var(--primary-color);
   }
   50% {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1.05);
-    box-shadow: 
-      0 0 20px rgba(255, 0, 230, 1),
-      0 0 40px rgba(255, 0, 230, 0.8),
-      0 0 60px rgba(77, 119, 255, 0.8),
-      0 0 80px rgba(77, 119, 255, 0.6);
+    box-shadow: 0 0 20px var(--primary-color), 0 0 40px var(--primary-color);
   }
   100% {
     opacity: 0.9;
     transform: translate(-50%, -50%) scale(0.98);
-    box-shadow: 
-      0 0 10px rgba(255, 0, 230, 0.8),
-      0 0 25px rgba(255, 0, 230, 0.6),
-      0 0 40px rgba(77, 119, 255, 0.6);
+    box-shadow: 0 0 10px var(--primary-color), 0 0 25px var(--primary-color);
   }
 }
 
 /* Profile Image as Title - centered positioning */
 .profile-image.main-title {
   position: fixed;
-  top: 20%;
+  top: 10%;
   left: 50%;
   transform: translateX(-50%);
   width: 120px;
@@ -305,9 +288,9 @@ body {
 
 /* Adjust terminal position when profile is in title position */
 body:has(.profile-image.main-title) .terminal-container {
-  top: 55%;
+  top: 65%;
   transform: translate(-50%, -50%);
-  max-height: 60vh; /* Limit height to ensure it doesn't overlap with profile */
+  max-height: 55vh; /* Limit height to ensure it doesn't overlap with profile */
 }
 
 .terminal-header {
@@ -492,6 +475,7 @@ body:has(.profile-image.main-title) .terminal-container {
   z-index: 215;
 }
 
+/* Updated profile glow effect without pink lines */
 .mind-map-profile::before {
   content: '';
   position: absolute;
@@ -503,19 +487,12 @@ body:has(.profile-image.main-title) .terminal-container {
   background: radial-gradient(
     circle at center,
     rgba(0, 0, 0, 0.5) 40%,
-    rgba(77, 119, 255, 0.7) 45%, 
-    rgba(77, 119, 255, 0.6) 47%,
-    rgba(255, 0, 230, 0.9) 60%,
-    rgba(255, 0, 230, 0.7) 70%,
+    var(--primary-color) 60%,
     transparent 75%
   );
   transform: translate(-50%, -50%);
   z-index: -1;
-  box-shadow: 
-    0 0 15px rgba(255, 0, 230, 0.9),
-    0 0 30px rgba(255, 0, 230, 0.7),
-    0 0 45px rgba(77, 119, 255, 0.7),
-    0 0 60px rgba(77, 119, 255, 0.5);
+  box-shadow: 0 0 15px var(--primary-color), 0 0 30px var(--primary-color);
   animation: electric-pulse var(--electric-pulse-speed) ease-in-out infinite alternate;
 }
 
@@ -551,40 +528,31 @@ body:has(.profile-image.main-title) .terminal-container {
 }
 
 .node-circuit {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 2px;
-  background-color: var(--secondary-color);
-  box-shadow: var(--neon-glow-secondary);
-  transform-origin: left center;
-  z-index: 204;
-  transition: width 0.5s ease;
+  display: none; /* Hide old circuit connections */
 }
 
-/* Node Positions */
+/* Node Positions - adjusted to align with circuit ends */
 .node[data-section="projects"] {
-  top: 30%;
-  left: 30%;
+  top: calc(50% - 35vmin*0.7071); /* 45 degree angle positioning */
+  left: calc(50% - 35vmin*0.7071);
   transform: translate(-50%, -50%);
 }
 
 .node[data-section="experience"] {
-  top: 30%;
-  right: 30%;
+  top: calc(50% - 35vmin*0.7071); /* 135 degree angle positioning */
+  right: calc(50% - 35vmin*0.7071);
   transform: translate(50%, -50%);
 }
 
 .node[data-section="education"] {
-  bottom: 30%;
-  left: 30%;
+  bottom: calc(50% - 35vmin*0.7071); /* 225 degree angle positioning */
+  left: calc(50% - 35vmin*0.7071);
   transform: translate(-50%, 50%);
 }
 
 .node[data-section="arts"] {
-  bottom: 30%;
-  right: 30%;
+  bottom: calc(50% - 35vmin*0.7071); /* 315 degree angle positioning */
+  right: calc(50% - 35vmin*0.7071);
   transform: translate(50%, 50%);
 }
 
@@ -1023,27 +991,6 @@ body:has(.profile-image.main-title) .terminal-container {
   }
 }
 
-/* Node Circuit positions and transforms */
-.node[data-section="projects"] .node-circuit {
-  transform: rotate(45deg);
-  width: 150px;
-}
-
-.node[data-section="experience"] .node-circuit {
-  transform: rotate(135deg);
-  width: 150px;
-}
-
-.node[data-section="education"] .node-circuit {
-  transform: rotate(225deg);
-  width: 150px;
-}
-
-.node[data-section="arts"] .node-circuit {
-  transform: rotate(315deg);
-  width: 150px;
-}
-
 /* Electrical pulse animation for circuits */
 @keyframes electrical-pulse {
   0%, 100% {
@@ -1311,28 +1258,28 @@ body:has(.profile-image.main-title) .terminal-container {
 /* Projects section connection (top-left) */
 .circuit-connection.projects {
   transform: rotate(45deg);
-  width: 35vmin;
+  width: calc(35vmin - 30px); /* Adjust width to align with nodes, accounting for node size */
   --circuit-angle: 135deg;
 }
 
 /* Experience section connection (top-right) */
 .circuit-connection.experience {
   transform: rotate(135deg);
-  width: 35vmin;
+  width: calc(35vmin - 30px); /* Adjust width to align with nodes, accounting for node size */
   --circuit-angle: 225deg;
 }
 
 /* Education section connection (bottom-left) */
 .circuit-connection.education {
   transform: rotate(225deg);
-  width: 35vmin;
+  width: calc(35vmin - 30px); /* Adjust width to align with nodes, accounting for node size */
   --circuit-angle: 315deg;
 }
 
 /* Arts section connection (bottom-right) */
 .circuit-connection.arts {
   transform: rotate(315deg);
-  width: 35vmin;
+  width: calc(35vmin - 30px); /* Adjust width to align with nodes, accounting for node size */
   --circuit-angle: 45deg;
 }
 
