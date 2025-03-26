@@ -94,10 +94,10 @@ body {
 /* Audio Control */
 .audio-control {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 40px;
-  height: 40px;
+  bottom: 15px;
+  right: 15px;
+  width: 30px;
+  height: 30px;
   background-color: rgba(0, 0, 0, 0.7);
   border-radius: 50%;
   display: flex;
@@ -115,7 +115,11 @@ body {
 
 .audio-control i {
   color: white;
-  font-size: 18px;
+  font-size: 14px;
+}
+
+.equalizer-icon {
+  transform: scale(0.8);
 }
 
 /* Profile Image */
@@ -221,10 +225,11 @@ body {
   transform: translateX(-50%) scale(1.05);
 }
 
+/* Profile name adjustment to shift left */
 .profile-name {
   position: absolute;
   bottom: -40px;
-  left: 50%;
+  left: 40%; /* Even further left from 45% */
   transform: translateX(-50%);
   width: 100%;
   text-align: center;

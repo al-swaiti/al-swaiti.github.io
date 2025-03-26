@@ -3,50 +3,45 @@
 /* Equalizer Styling */
 .audio-control {
   position: fixed;
-  top: 20px;
-  right: 20px;
-  width: 60px;
-  height: 60px;
+  bottom: 15px;
+  right: 15px;
+  width: 30px;
+  height: 30px;
+  background-color: rgba(0, 0, 0, 0.7);
   border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.5);
-  border: 2px solid var(--primary-color);
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   cursor: pointer;
   z-index: 100;
   transition: all 0.3s ease;
-  overflow: hidden;
 }
 
 .audio-control:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 15px var(--primary-color);
+  background-color: rgba(0, 0, 0, 0.9);
+  box-shadow: 0 0 10px var(--primary-color);
+  transform: scale(1.05);
 }
 
 .audio-control.active {
-  background-color: rgba(0, 0, 0, 0.8);
-  border-color: #ec4899;
-  box-shadow: 0 0 15px #ec4899, 0 0 25px #ec4899, inset 0 0 10px rgba(236, 72, 153, 0.5);
+  background-color: rgba(0, 0, 0, 0.9);
+  box-shadow: 0 0 15px var(--primary-color);
 }
 
 .equalizer-icon {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  height: 30px;
-  width: 30px;
-  cursor: pointer;
+  height: 16px;
+  width: 16px;
   position: relative;
-  border-radius: 4px;
-  background-color: transparent;
-  transition: all 0.3s ease;
+  transform: scale(0.8);
 }
 
 .equalizer-bar {
-  width: 4px;
-  height: 5px;
-  margin: 0 2px;
+  width: 3px;
+  height: 4px;
+  margin: 0 1px;
   background-color: var(--primary-color);
   border-radius: 1px;
   position: relative;
@@ -58,26 +53,26 @@
 .equalizer-bar::after {
   content: '';
   position: absolute;
-  top: -3px;
+  top: -2px;
   left: 0;
   width: 0;
   height: 0;
-  border-left: 2px solid transparent;
-  border-right: 2px solid transparent;
-  border-bottom: 4px solid var(--primary-color);
+  border-left: 1.5px solid transparent;
+  border-right: 1.5px solid transparent;
+  border-bottom: 3px solid var(--primary-color);
   transform: rotate(180deg);
   transition: border-color 0.3s ease;
 }
 
 /* Inactive equalizer (muted) */
 .equalizer-muted .equalizer-bar {
-  height: 5px !important;
-  background-color: var(--text-color) !important;
+  height: 4px !important;
+  background-color: white !important;
   box-shadow: none !important;
 }
 
 .equalizer-muted .equalizer-bar::after {
-  border-bottom-color: var(--text-color) !important;
+  border-bottom-color: white !important;
 }
 
 /* Active equalizer with animated bars */
@@ -85,7 +80,7 @@
   animation-play-state: running;
 }
 
-/* Individual bar animations */
+/* Individual bar animations - smaller heights for proportional look */
 .audio-control.active .equalizer-bar-1 {
   animation: equalize-1 1.2s ease-in-out infinite alternate;
 }
@@ -108,31 +103,31 @@
 }
 
 @keyframes equalize-1 {
-  0% { height: 5px; background-color: hsl(280, 100%, 60%); box-shadow: 0 0 5px hsl(280, 100%, 60%); }
-  40% { height: 15px; background-color: hsl(310, 100%, 65%); box-shadow: 0 0 10px hsl(310, 100%, 65%); }
-  60% { height: 10px; background-color: hsl(300, 100%, 60%); box-shadow: 0 0 8px hsl(300, 100%, 60%); }
-  100% { height: 30px; background-color: hsl(330, 100%, 70%); box-shadow: 0 0 15px hsl(330, 100%, 70%); }
+  0% { height: 4px; background-color: hsl(280, 100%, 60%); box-shadow: 0 0 4px hsl(280, 100%, 60%); }
+  40% { height: 10px; background-color: hsl(310, 100%, 65%); box-shadow: 0 0 6px hsl(310, 100%, 65%); }
+  60% { height: 7px; background-color: hsl(300, 100%, 60%); box-shadow: 0 0 5px hsl(300, 100%, 60%); }
+  100% { height: 16px; background-color: hsl(330, 100%, 70%); box-shadow: 0 0 8px hsl(330, 100%, 70%); }
 }
 
 @keyframes equalize-2 {
-  0% { height: 8px; background-color: hsl(290, 100%, 60%); box-shadow: 0 0 5px hsl(290, 100%, 60%); }
-  50% { height: 25px; background-color: hsl(320, 100%, 65%); box-shadow: 0 0 12px hsl(320, 100%, 65%); }
-  75% { height: 15px; background-color: hsl(300, 100%, 60%); box-shadow: 0 0 8px hsl(300, 100%, 60%); }
-  100% { height: 35px; background-color: hsl(340, 100%, 70%); box-shadow: 0 0 18px hsl(340, 100%, 70%); }
+  0% { height: 5px; background-color: hsl(290, 100%, 60%); box-shadow: 0 0 4px hsl(290, 100%, 60%); }
+  50% { height: 14px; background-color: hsl(320, 100%, 65%); box-shadow: 0 0 7px hsl(320, 100%, 65%); }
+  75% { height: 9px; background-color: hsl(300, 100%, 60%); box-shadow: 0 0 5px hsl(300, 100%, 60%); }
+  100% { height: 18px; background-color: hsl(340, 100%, 70%); box-shadow: 0 0 9px hsl(340, 100%, 70%); }
 }
 
 @keyframes equalize-3 {
-  0% { height: 10px; background-color: hsl(300, 100%, 60%); box-shadow: 0 0 5px hsl(300, 100%, 60%); }
-  30% { height: 20px; background-color: hsl(330, 100%, 65%); box-shadow: 0 0 10px hsl(330, 100%, 65%); }
-  70% { height: 15px; background-color: hsl(310, 100%, 60%); box-shadow: 0 0 8px hsl(310, 100%, 60%); }
-  100% { height: 28px; background-color: hsl(350, 100%, 70%); box-shadow: 0 0 14px hsl(350, 100%, 70%); }
+  0% { height: 6px; background-color: hsl(300, 100%, 60%); box-shadow: 0 0 4px hsl(300, 100%, 60%); }
+  30% { height: 12px; background-color: hsl(330, 100%, 65%); box-shadow: 0 0 6px hsl(330, 100%, 65%); }
+  70% { height: 9px; background-color: hsl(310, 100%, 60%); box-shadow: 0 0 5px hsl(310, 100%, 60%); }
+  100% { height: 15px; background-color: hsl(350, 100%, 70%); box-shadow: 0 0 8px hsl(350, 100%, 70%); }
 }
 
 @keyframes equalize-4 {
-  0% { height: 6px; background-color: hsl(310, 100%, 60%); box-shadow: 0 0 5px hsl(310, 100%, 60%); }
-  45% { height: 18px; background-color: hsl(340, 100%, 65%); box-shadow: 0 0 9px hsl(340, 100%, 65%); }
-  80% { height: 12px; background-color: hsl(320, 100%, 60%); box-shadow: 0 0 6px hsl(320, 100%, 60%); }
-  100% { height: 32px; background-color: hsl(360, 100%, 70%); box-shadow: 0 0 16px hsl(360, 100%, 70%); }
+  0% { height: 4px; background-color: hsl(310, 100%, 60%); box-shadow: 0 0 4px hsl(310, 100%, 60%); }
+  45% { height: 11px; background-color: hsl(340, 100%, 65%); box-shadow: 0 0 6px hsl(340, 100%, 65%); }
+  80% { height: 8px; background-color: hsl(320, 100%, 60%); box-shadow: 0 0 5px hsl(320, 100%, 60%); }
+  100% { height: 17px; background-color: hsl(360, 100%, 70%); box-shadow: 0 0 8px hsl(360, 100%, 70%); }
 }
 
 @keyframes glow-pulse {
