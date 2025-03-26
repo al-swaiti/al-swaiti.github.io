@@ -1,0 +1,126 @@
+/* Final Terminal and CPU Animations CSS */
+:root {
+  --primary-color: #00f0ff;
+  --secondary-color: #ff00e6;
+  --tertiary-color: #39ff14; /* Electric green */
+  --quaternary-color: #ffcc00; /* Amber */
+  --terminal-text: #16d9c5; /* Updated terminal text color as requested */
+  --circuit-color: #00f0ff;
+  --pulse-color: #39ff14; /* Electric green for pulses */
+  --background-color: #0a0a0a;
+  --terminal-bg: rgba(10, 10, 10, 0.8);
+  --glass-effect: rgba(255, 255, 255, 0.1);
+  --neon-glow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color), 0 0 30px var(--primary-color);
+  --neon-glow-secondary: 0 0 10px var(--secondary-color), 0 0 20px var(--secondary-color), 0 0 30px var(--secondary-color);
+  --neon-glow-tertiary: 0 0 10px var(--tertiary-color), 0 0 20px var(--tertiary-color), 0 0 30px var(--tertiary-color);
+  --neon-glow-quaternary: 0 0 10px var(--quaternary-color), 0 0 20px var(--quaternary-color), 0 0 30px var(--quaternary-color);
+  --terminal-glow: 0 0 10px var(--terminal-text), 0 0 20px var(--terminal-text), 0 0 30px var(--terminal-text);
+}
+
+/* Updated Terminal Styling */
+.terminal-content {
+  color: var(--terminal-text);
+  text-shadow: var(--terminal-glow);
+  font-family: 'JetBrains Mono', 'Fira Code', 'Roboto Mono', monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  overflow: hidden; /* Remove scrollbar */
+  padding-right: 5px; /* Compensate for removed scrollbar */
+}
+
+.cursor {
+  background-color: var(--terminal-text);
+  box-shadow: var(--terminal-glow);
+}
+
+/* Updated CPU Design - No transparency and bass-reactive */
+.profile-image.centered {
+  position: fixed;
+  bottom: auto;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
+  z-index: 150;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  background-color: rgba(0, 0, 0, 1); /* Solid background, no transparency */
+  border: 2px solid var(--primary-color);
+  box-shadow: var(--neon-glow);
+  overflow: visible;
+}
+
+.profile-image.centered img {
+  opacity: 1; /* No transparency */
+}
+
+/* Bass-reactive CPU animation */
+.profile-image.centered.bass-pulse {
+  animation: bass-pulse-animation 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+@keyframes bass-pulse-animation {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: var(--neon-glow);
+    border-color: var(--primary-color);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.15);
+    box-shadow: 0 0 20px var(--tertiary-color), 0 0 40px var(--tertiary-color), 0 0 60px var(--tertiary-color);
+    border-color: var(--tertiary-color);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: var(--neon-glow);
+    border-color: var(--primary-color);
+  }
+}
+
+/* Dancing small CPUs */
+.node.cpu-style.music-dance {
+  animation: node-dance-animation 0.5s ease;
+}
+
+@keyframes node-dance-animation {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  25% {
+    transform: translateY(-5px) scale(1.1);
+  }
+  50% {
+    transform: translateY(0) scale(1);
+  }
+  75% {
+    transform: translateY(5px) scale(1.1);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Bass-triggered pulse from center */
+.bass-triggered-pulse {
+  position: absolute;
+  width: 30px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--tertiary-color), var(--quaternary-color), var(--tertiary-color), transparent);
+  box-shadow: 0 0 15px var(--tertiary-color), 0 0 30px var(--tertiary-color);
+  opacity: 1;
+  z-index: 142;
+}
+
+/* Enhanced Circuit Board for Music Visualization */
+.circuit-board {
+  position: absolute;
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  background-color: rgba(10, 10, 10, 0.3);
+  border-radius: 5px;
+  box-shadow: inset 0 0 10px rgba(0, 240, 255, 0.1);
+  z-index: 139;
+  transition: all 0.3s ease;
+}
+
+/* Font imports for terminal */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Fira+Code:wght@300;400;500&display=swap');

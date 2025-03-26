@@ -1,0 +1,675 @@
+/* Audio Visualizer and Music Reactive Effects */
+
+/* Equalizer Styling */
+.audio-control {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 2px solid var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.audio-control:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px var(--primary-color);
+}
+
+.audio-control.active {
+  background-color: rgba(0, 0, 0, 0.8);
+  border-color: #ec4899;
+  box-shadow: 0 0 15px #ec4899, 0 0 25px #ec4899, inset 0 0 10px rgba(236, 72, 153, 0.5);
+}
+
+.equalizer-icon {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+  position: relative;
+  border-radius: 4px;
+  background-color: transparent;
+  transition: all 0.3s ease;
+}
+
+.equalizer-bar {
+  width: 4px;
+  height: 5px;
+  margin: 0 2px;
+  background-color: var(--primary-color);
+  border-radius: 1px;
+  position: relative;
+  transition: height 0.1s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+  transform-origin: bottom;
+}
+
+/* Add active spikes to the tops of bars */
+.equalizer-bar::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 2px solid transparent;
+  border-right: 2px solid transparent;
+  border-bottom: 4px solid var(--primary-color);
+  transform: rotate(180deg);
+  transition: border-color 0.3s ease;
+}
+
+/* Inactive equalizer (muted) */
+.equalizer-muted .equalizer-bar {
+  height: 5px !important;
+  background-color: var(--text-color) !important;
+  box-shadow: none !important;
+}
+
+.equalizer-muted .equalizer-bar::after {
+  border-bottom-color: var(--text-color) !important;
+}
+
+/* Active equalizer with animated bars */
+.audio-control.active .equalizer-bar {
+  animation-play-state: running;
+}
+
+/* Individual bar animations */
+.audio-control.active .equalizer-bar-1 {
+  animation: equalize-1 1.2s ease-in-out infinite alternate;
+}
+
+.audio-control.active .equalizer-bar-2 {
+  animation: equalize-2 0.8s ease-in-out infinite alternate;
+}
+
+.audio-control.active .equalizer-bar-3 {
+  animation: equalize-3 1.5s ease-in-out infinite alternate;
+}
+
+.audio-control.active .equalizer-bar-4 {
+  animation: equalize-4 1.0s ease-in-out infinite alternate;
+}
+
+.audio-control.active .equalizer-bar::after {
+  border-bottom-color: hsl(300, 100%, 60%);
+  animation: glow-pulse 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes equalize-1 {
+  0% { height: 5px; background-color: hsl(280, 100%, 60%); box-shadow: 0 0 5px hsl(280, 100%, 60%); }
+  40% { height: 15px; background-color: hsl(310, 100%, 65%); box-shadow: 0 0 10px hsl(310, 100%, 65%); }
+  60% { height: 10px; background-color: hsl(300, 100%, 60%); box-shadow: 0 0 8px hsl(300, 100%, 60%); }
+  100% { height: 30px; background-color: hsl(330, 100%, 70%); box-shadow: 0 0 15px hsl(330, 100%, 70%); }
+}
+
+@keyframes equalize-2 {
+  0% { height: 8px; background-color: hsl(290, 100%, 60%); box-shadow: 0 0 5px hsl(290, 100%, 60%); }
+  50% { height: 25px; background-color: hsl(320, 100%, 65%); box-shadow: 0 0 12px hsl(320, 100%, 65%); }
+  75% { height: 15px; background-color: hsl(300, 100%, 60%); box-shadow: 0 0 8px hsl(300, 100%, 60%); }
+  100% { height: 35px; background-color: hsl(340, 100%, 70%); box-shadow: 0 0 18px hsl(340, 100%, 70%); }
+}
+
+@keyframes equalize-3 {
+  0% { height: 10px; background-color: hsl(300, 100%, 60%); box-shadow: 0 0 5px hsl(300, 100%, 60%); }
+  30% { height: 20px; background-color: hsl(330, 100%, 65%); box-shadow: 0 0 10px hsl(330, 100%, 65%); }
+  70% { height: 15px; background-color: hsl(310, 100%, 60%); box-shadow: 0 0 8px hsl(310, 100%, 60%); }
+  100% { height: 28px; background-color: hsl(350, 100%, 70%); box-shadow: 0 0 14px hsl(350, 100%, 70%); }
+}
+
+@keyframes equalize-4 {
+  0% { height: 6px; background-color: hsl(310, 100%, 60%); box-shadow: 0 0 5px hsl(310, 100%, 60%); }
+  45% { height: 18px; background-color: hsl(340, 100%, 65%); box-shadow: 0 0 9px hsl(340, 100%, 65%); }
+  80% { height: 12px; background-color: hsl(320, 100%, 60%); box-shadow: 0 0 6px hsl(320, 100%, 60%); }
+  100% { height: 32px; background-color: hsl(360, 100%, 70%); box-shadow: 0 0 16px hsl(360, 100%, 70%); }
+}
+
+@keyframes glow-pulse {
+  0% { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+
+/* Audio-reactive circles around profile image */
+.audio-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid rgba(var(--primary-rgb), 0.1);
+  border-radius: 50%;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.profile-image .audio-circle:nth-child(1) {
+  width: 110%;
+  height: 110%;
+  animation: circle-pulse 4s infinite alternate;
+}
+
+.profile-image .audio-circle:nth-child(2) {
+  width: 130%;
+  height: 130%;
+  border-width: 1.5px;
+  animation: circle-pulse 6s 0.5s infinite alternate;
+}
+
+.profile-image .audio-circle:nth-child(3) {
+  width: 160%;
+  height: 160%;
+  border-width: 1px;
+  animation: circle-pulse 8s 1s infinite alternate;
+}
+
+@keyframes circle-pulse {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.1; }
+  50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.3; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 0.1; }
+}
+
+/* Terminal Container - Glass Effect with matching border animation */
+.terminal-container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 85%;
+  max-width: 800px;
+  z-index: 15;
+  text-align: left;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(10, 10, 15, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
+  border: 2px solid #ec4899; /* Match text color */
+  animation: border-pulse 5s infinite alternate; /* Matching animation */
+  font-family: 'Orbitron', sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Terminal header styling */
+.terminal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(15, 15, 20, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 2px solid #ec4899; /* Match text color */
+  padding: 10px 15px;
+  height: 30px;
+  animation: border-pulse 5s infinite alternate; /* Matching animation */
+}
+
+.terminal-buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.terminal-button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.terminal-button.close {
+  background-color: #ff5f56;
+}
+
+.terminal-button.minimize {
+  background-color: #ffbd2e;
+}
+
+.terminal-button.maximize {
+  background-color: #27c93f;
+}
+
+.terminal-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #ec4899;
+  letter-spacing: 1px;
+  flex-grow: 1;
+  animation: text-color-pulse 5s infinite alternate;
+  text-shadow: 0 0 8px rgba(236, 72, 153, 0.5);
+}
+
+/* Terminal content styling */
+.terminal-content {
+  position: relative;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: hidden;
+  background: rgba(5, 5, 10, 0.4);
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+/* Terminal Text */
+#terminal-text {
+  padding: 20px;
+  color: #ec4899;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  line-height: 1.6;
+  overflow-y: auto;
+  height: 100%;
+  text-shadow: 0 0 8px rgba(236, 72, 153, 0.5);
+  animation: text-color-pulse 5s infinite alternate;
+}
+
+/* Color animations */
+@keyframes border-pulse {
+  0% {
+    border-color: #ec4899;
+    box-shadow: 0 0 15px rgba(236, 72, 153, 0.3);
+  }
+  50% {
+    border-color: #d946ef;
+    box-shadow: 0 0 20px rgba(217, 70, 239, 0.4);
+  }
+  100% {
+    border-color: #ec4899;
+    box-shadow: 0 0 15px rgba(236, 72, 153, 0.3);
+  }
+}
+
+@keyframes text-color-pulse {
+  0% {
+    color: #ec4899;
+    text-shadow: 0 0 8px rgba(236, 72, 153, 0.5);
+  }
+  50% {
+    color: #d946ef;
+    text-shadow: 0 0 10px rgba(217, 70, 239, 0.6);
+  }
+  100% {
+    color: #ec4899;
+    text-shadow: 0 0 8px rgba(236, 72, 153, 0.5);
+  }
+}
+
+/* Terminal Cursor with matching color */
+.cursor {
+  position: relative;
+  display: inline-block;
+  width: 8px;
+  height: 16px;
+  background-color: #ec4899;
+  animation: cursor-pulse 1s step-end infinite;
+  margin-left: 4px;
+  vertical-align: middle;
+  box-shadow: 0 0 8px rgba(236, 72, 153, 0.8);
+}
+
+@keyframes cursor-pulse {
+  0%, 100% { 
+    opacity: 0; 
+    background-color: #ec4899;
+  }
+  50% { 
+    opacity: 1; 
+    background-color: #d946ef;
+  }
+}
+
+/* Glass-specific effects */
+.terminal-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg, 
+    rgba(255, 255, 255, 0.03) 0%, 
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Scrollbar styling for the glass effect */
+#terminal-text::-webkit-scrollbar {
+  width: 6px;
+}
+
+#terminal-text::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+}
+
+#terminal-text::-webkit-scrollbar-thumb {
+  background: rgba(236, 72, 153, 0.4);
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+#terminal-text::-webkit-scrollbar-thumb:hover {
+  background: rgba(236, 72, 153, 0.7);
+}
+
+/* CRT scan line effect */
+.terminal-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(32, 32, 32, 0.05) 50%,
+    transparent 100%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0.3;
+  animation: terminal-scan 8s linear infinite;
+}
+
+@keyframes terminal-scan {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100%; }
+}
+
+/* Terminal repositioning and unified styling */
+.terminal-container {
+  position: fixed;
+  top: 200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  max-width: 90%;
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 1px solid #1bfd9c;
+  border-radius: 5px;
+  overflow: hidden;
+  color: #1bfd9c;
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  z-index: 15;
+  box-shadow: 0 0 15px rgba(27, 253, 156, 0.5);
+  backdrop-filter: blur(5px);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Terminal header styling */
+.terminal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.9);
+  border-bottom: 1px solid #1bfd9c;
+  padding: 5px 10px;
+  height: 30px;
+  overflow: hidden;
+}
+
+.terminal-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.terminal-button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.terminal-button.close {
+  background-color: #ff5f56;
+}
+
+.terminal-button.minimize {
+  background-color: #ffbd2e;
+}
+
+.terminal-button.maximize {
+  background-color: #27c93f;
+}
+
+.terminal-title {
+  color: #1bfd9c;
+  font-size: 14px;
+  flex-grow: 1;
+  text-align: center;
+  letter-spacing: 1px;
+  text-shadow: 0 0 5px rgba(27, 253, 156, 0.7);
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Terminal content styling */
+.terminal-content {
+  padding: 15px;
+  max-height: 300px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #1bfd9c rgba(0, 0, 0, 0.2);
+  flex-grow: 1;
+}
+
+/* Terminal Text */
+#terminal-text {
+  padding: 15px;
+  color: #ec4899; /* Maintain the pink color */
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  line-height: 1.4;
+  overflow-y: auto;
+  height: 100%;
+}
+
+/* Terminal Cursor */
+.cursor {
+  position: relative;
+  display: inline-block;
+  width: 8px;
+  height: 15px;
+  background-color: #ec4899; /* Match text color */
+  animation: blink 1s step-end infinite;
+  margin-left: 2px;
+  vertical-align: middle;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+/* Terminal scrolling text effect */
+.terminal-line {
+  position: relative;
+  margin-bottom: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: typing 0.5s steps(30, end), scan-line 0.1s linear;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+/* Line fade out animation */
+.terminal-line.fade-out {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Glitch effect for terminal text */
+.glitch-effect {
+  animation: glitch 0.2s linear;
+  position: relative;
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+/* CPU Mind Map Canvas */
+.cpu-mindmap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0.8;
+}
+
+/* Neural node glow effect */
+.neural-node {
+  position: absolute;
+  border-radius: 50%;
+  background-color: hsl(320, 100%, 75%);
+  box-shadow: 0 0 15px hsl(320, 100%, 75%);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+/* Connection line effect */
+.neural-connection {
+  position: absolute;
+  height: 1px;
+  background-color: hsl(320, 100%, 75%);
+  pointer-events: none;
+  transform-origin: left center;
+}
+
+/* Quantum plasma effect */
+.quantum-plasma {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    hsl(320, 100%, 75%) 0%,
+    transparent 70%
+  );
+  opacity: 0.6;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  filter: blur(2px);
+}
+
+/* Terminal text music reactive effect */
+#terminal-text {
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+  letter-spacing: 1px;
+  line-height: 1.4;
+  padding: 10px;
+  color: #ec4899;
+  height: 200px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  text-shadow: 0 0 8px rgba(236, 72, 153, 0.6);
+  position: relative;
+  animation: text-color-pulse 5s infinite alternate;
+  transition: filter 0.2s ease, text-shadow 0.2s ease;
+}
+
+/* Music reactive animation for terminal text */
+#terminal-text.music-active {
+  animation: text-color-pulse 4s infinite alternate;
+}
+
+/* Animation for active audio with terminal text */
+.audio-control.active ~ .terminal-container #terminal-text {
+  animation: text-color-pulse 5s infinite alternate;
+}
+
+/* Add music pulse effect for profile image as fallback */
+.profile-image.music-pulse {
+  animation: profile-pulse 2s infinite alternate;
+}
+
+@keyframes profile-pulse {
+  0% { transform: translateX(-50%) scale(1); box-shadow: 0 0 5px rgba(var(--primary-rgb), 0.5); }
+  100% { transform: translateX(-50%) scale(1.08); box-shadow: 0 0 20px rgba(var(--primary-rgb), 0.8); }
+}
+
+@keyframes text-color-pulse {
+  0% { filter: brightness(70%) contrast(130%) hue-rotate(0deg); text-shadow: 0 0 5px var(--primary-color); }
+  25% { filter: brightness(100%) contrast(150%) hue-rotate(10deg); text-shadow: 0 0 10px var(--accent-color); }
+  50% { filter: brightness(120%) contrast(180%) hue-rotate(20deg); text-shadow: 0 0 15px var(--primary-color); }
+  75% { filter: brightness(100%) contrast(150%) hue-rotate(10deg); text-shadow: 0 0 10px var(--accent-color); }
+  100% { filter: brightness(140%) contrast(200%) hue-rotate(30deg); text-shadow: 0 0 20px var(--primary-color); }
+}
+
+/* Music Reactive Effects */
+.music-pulse {
+  animation: music-pulse 1s ease-in-out infinite alternate;
+}
+
+@keyframes music-pulse {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.05); }
+}
+
+/* Terminal typing effect enhanced with music reactivity */
+.cursor {
+  background-color: var(--primary-color);
+  animation: cursor-blink-music 1s ease-in-out infinite alternate;
+}
+
+@keyframes cursor-blink-music {
+  0% { opacity: 0.3; box-shadow: 0 0 5px var(--primary-color); }
+  50% { opacity: 1; box-shadow: 0 0 15px var(--primary-color); }
+  100% { opacity: 0.3; box-shadow: 0 0 5px var(--primary-color); }
+}
+
+.base-spinner.profile-spinner {
+  position: relative;
+  overflow: visible;
+}
+
+.base-spinner.profile-spinner img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 10px var(--primary-color);
+}
+
+.base-spinner .audio-circle {
+  border-color: #ec4899;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');

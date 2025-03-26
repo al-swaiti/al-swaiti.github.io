@@ -1,0 +1,136 @@
+/* Final Color and Terminal Refinements CSS */
+:root {
+  --primary-color: #00f0ff; /* Cyan */
+  --secondary-color: #ff00e6; /* Magenta */
+  --tertiary-color: #ffcc00; /* Amber */
+  --quaternary-color: #9d4edd; /* Purple */
+  --terminal-text: #16d9c5; /* Terminal text color */
+  --terminal-header: #ff7ac6; /* Terminal header color */
+  --background-color: #0a0a0a;
+  --terminal-bg: rgba(10, 10, 10, 0.8);
+  --glass-effect: rgba(255, 255, 255, 0.1);
+}
+
+/* CPU Glow Effects - No Size Change */
+.profile-image.centered {
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  animation: none !important; /* Remove any existing animations */
+  transform: translate(-50%, -50%) !important; /* Keep position fixed */
+}
+
+/* Override any bass-pulse animations */
+.profile-image.centered.bass-pulse {
+  animation: none !important;
+  transform: translate(-50%, -50%) !important;
+}
+
+/* Music-reactive glow for center CPU */
+.profile-image.centered.music-glow-1 {
+  box-shadow: 0 0 15px var(--primary-color), 0 0 30px var(--primary-color), 0 0 45px var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.profile-image.centered.music-glow-2 {
+  box-shadow: 0 0 15px var(--secondary-color), 0 0 30px var(--secondary-color), 0 0 45px var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+.profile-image.centered.music-glow-3 {
+  box-shadow: 0 0 15px var(--tertiary-color), 0 0 30px var(--tertiary-color), 0 0 45px var(--tertiary-color);
+  border-color: var(--tertiary-color);
+}
+
+.profile-image.centered.music-glow-4 {
+  box-shadow: 0 0 15px var(--quaternary-color), 0 0 30px var(--quaternary-color), 0 0 45px var(--quaternary-color);
+  border-color: var(--quaternary-color);
+}
+
+/* Small CPU Glow Effects - No Size Change */
+.node.cpu-style {
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  animation: none !important; /* Remove any existing animations */
+  transform: none !important; /* Keep position fixed */
+}
+
+/* Music-reactive glow for small CPUs */
+.node.cpu-style.music-glow-1 {
+  box-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color), 0 0 30px var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.node.cpu-style.music-glow-2 {
+  box-shadow: 0 0 10px var(--secondary-color), 0 0 20px var(--secondary-color), 0 0 30px var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+.node.cpu-style.music-glow-3 {
+  box-shadow: 0 0 10px var(--tertiary-color), 0 0 20px var(--tertiary-color), 0 0 30px var(--tertiary-color);
+  border-color: var(--tertiary-color);
+}
+
+.node.cpu-style.music-glow-4 {
+  box-shadow: 0 0 10px var(--quaternary-color), 0 0 20px var(--quaternary-color), 0 0 30px var(--quaternary-color);
+  border-color: var(--quaternary-color);
+}
+
+/* Hide bass-triggered pulses */
+.bass-triggered-pulse {
+  display: none !important;
+}
+
+/* Terminal Header Styles */
+.terminal-role-header {
+  color: var(--terminal-header);
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-family: 'Orbitron', monospace;
+  text-shadow: 0 0 5px var(--terminal-header), 0 0 10px var(--terminal-header);
+  animation: role-text-glow 2s infinite alternate;
+}
+
+@keyframes role-text-glow {
+  from {
+    text-shadow: 0 0 5px var(--terminal-header), 0 0 10px var(--terminal-header);
+  }
+  to {
+    text-shadow: 0 0 10px var(--terminal-header), 0 0 20px var(--terminal-header), 0 0 30px var(--terminal-header);
+  }
+}
+
+/* Coordinated Color Scheme for All Elements */
+.circuit-segment {
+  background-color: var(--primary-color);
+  box-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color);
+}
+
+.connection-point {
+  background-color: var(--secondary-color);
+  box-shadow: 0 0 5px var(--secondary-color), 0 0 10px var(--secondary-color);
+}
+
+/* Ensure all CPU legs have coordinated colors */
+.cpu-legs, .node-cpu-legs {
+  background-color: var(--tertiary-color);
+  box-shadow: 0 0 5px var(--tertiary-color);
+}
+
+/* Section titles with coordinated colors */
+.section-header h2.music-glow-1 {
+  color: var(--primary-color);
+  text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
+}
+
+.section-header h2.music-glow-2 {
+  color: var(--secondary-color);
+  text-shadow: 0 0 10px var(--secondary-color), 0 0 20px var(--secondary-color);
+}
+
+.section-header h2.music-glow-3 {
+  color: var(--tertiary-color);
+  text-shadow: 0 0 10px var(--tertiary-color), 0 0 20px var(--tertiary-color);
+}
+
+.section-header h2.music-glow-4 {
+  color: var(--quaternary-color);
+  text-shadow: 0 0 10px var(--quaternary-color), 0 0 20px var(--quaternary-color);
+}

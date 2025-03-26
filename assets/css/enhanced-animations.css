@@ -1,0 +1,133 @@
+/* Enhanced Animation CSS */
+@keyframes terminal-zoom-in {
+  0% {
+    transform: translate(-50%, -50%) scale(0.01);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
+  }
+  50% {
+    box-shadow: 0 0 15px var(--primary-color), 0 0 30px var(--primary-color), 0 0 45px var(--primary-color);
+  }
+}
+
+@keyframes data-pulse {
+  0%, 100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.terminal-container {
+  animation: terminal-zoom-in 1.5s ease-out;
+}
+
+.terminal-header {
+  opacity: 0;
+  animation: fade-in 0.5s ease-out 1.5s forwards;
+}
+
+.profile-image.centered {
+  position: fixed;
+  bottom: auto;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
+  z-index: 150;
+  transition: all 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.profile-image.centered::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  border-radius: 50%;
+  background: transparent;
+  border: 2px solid var(--primary-color);
+  animation: pulse-glow 2s infinite;
+  z-index: -1;
+}
+
+.data-pulse {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--primary-color) 0%, transparent 70%);
+  opacity: 0;
+  transform: scale(0);
+  animation: data-pulse 2s infinite;
+}
+
+.circuit-path {
+  position: absolute;
+  background-color: var(--primary-color);
+  height: 2px;
+  transform-origin: left center;
+  z-index: 140;
+  box-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color);
+}
+
+.data-bit {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background-color: white;
+  border-radius: 50%;
+  z-index: 141;
+  box-shadow: 0 0 5px white;
+  animation: data-pulse 1s infinite;
+}
+
+.node.cpu-style {
+  overflow: visible;
+}
+
+.node.cpu-style::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid var(--secondary-color);
+  animation: pulse-glow 2s infinite;
+  animation-delay: 0.5s;
+  z-index: -1;
+}
+
+.node.cpu-style::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid var(--secondary-color);
+  opacity: 0.5;
+  animation: pulse-glow 2s infinite;
+  animation-delay: 1s;
+  z-index: -2;
+}

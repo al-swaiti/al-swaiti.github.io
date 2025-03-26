@@ -1,0 +1,182 @@
+/* Music Synchronized CPU Design CSS */
+:root {
+  --primary-color: #00f0ff;
+  --secondary-color: #ff00e6;
+  --tertiary-color: #39ff14; /* Electric green */
+  --quaternary-color: #ffcc00; /* Amber */
+  --terminal-text: #ff7ac6; /* Luminescent pink/rose color */
+  --circuit-color: #00f0ff;
+  --pulse-color: #39ff14; /* Electric green for pulses */
+  --background-color: #0a0a0a;
+  --terminal-bg: rgba(10, 10, 10, 0.8);
+  --glass-effect: rgba(255, 255, 255, 0.1);
+  --neon-glow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color), 0 0 30px var(--primary-color);
+  --neon-glow-secondary: 0 0 10px var(--secondary-color), 0 0 20px var(--secondary-color), 0 0 30px var(--secondary-color);
+  --neon-glow-tertiary: 0 0 10px var(--tertiary-color), 0 0 20px var(--tertiary-color), 0 0 30px var(--tertiary-color);
+  --neon-glow-quaternary: 0 0 10px var(--quaternary-color), 0 0 20px var(--quaternary-color), 0 0 30px var(--quaternary-color);
+}
+
+/* Updated CPU Design - No AA text and solid background */
+.profile-image.centered {
+  position: fixed;
+  bottom: auto;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
+  z-index: 150;
+  transition: all 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  background-color: rgba(0, 0, 0, 0.9); /* Solid background instead of transparent */
+  border: 2px solid var(--primary-color);
+  box-shadow: var(--neon-glow);
+}
+
+.profile-image.centered img {
+  opacity: 0.9; /* Slightly less transparent */
+}
+
+/* Hide the AA text in base spinner */
+.base-spinner .spinner-icon {
+  display: none;
+}
+
+/* CPU Design */
+.cpu-main {
+  position: relative;
+  border-radius: 10px;
+  overflow: visible;
+  transition: all 0.3s ease;
+}
+
+.cpu-main::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border-radius: 10px;
+  border: 2px solid var(--primary-color);
+  box-shadow: var(--neon-glow);
+  z-index: -1;
+}
+
+/* Music Beat Synchronized Animations */
+.beat-pulse {
+  animation: beat-pulse-animation 0.3s ease;
+}
+
+.beat-pulse-circuit {
+  animation: beat-pulse-circuit-animation 0.3s ease;
+}
+
+@keyframes beat-pulse-animation {
+  0% {
+    box-shadow: var(--neon-glow);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 20px var(--tertiary-color), 0 0 40px var(--tertiary-color), 0 0 60px var(--tertiary-color);
+    transform: scale(1.1);
+  }
+  100% {
+    box-shadow: var(--neon-glow);
+    transform: scale(1);
+  }
+}
+
+@keyframes beat-pulse-circuit-animation {
+  0% {
+    box-shadow: 0 0 5px var(--circuit-color), 0 0 10px var(--circuit-color);
+    opacity: 1;
+  }
+  50% {
+    box-shadow: 0 0 10px var(--tertiary-color), 0 0 20px var(--tertiary-color);
+    opacity: 1;
+  }
+  100% {
+    box-shadow: 0 0 5px var(--circuit-color), 0 0 10px var(--circuit-color);
+    opacity: 1;
+  }
+}
+
+/* Enhanced Electrical Pulse for Beat Synchronization */
+.electrical-pulse.beat-triggered {
+  width: 30px !important;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--tertiary-color), var(--quaternary-color), var(--tertiary-color), transparent);
+  box-shadow: 0 0 15px var(--tertiary-color), 0 0 30px var(--tertiary-color);
+  opacity: 1;
+}
+
+/* Enhanced Circuit Board for Music Visualization */
+.circuit-board {
+  position: absolute;
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  background-color: rgba(10, 10, 10, 0.3);
+  border-radius: 5px;
+  box-shadow: inset 0 0 10px rgba(0, 240, 255, 0.1);
+  z-index: 139;
+  transition: all 0.3s ease;
+}
+
+.circuit-board.beat-active {
+  border: 1px solid rgba(57, 255, 20, 0.3);
+  box-shadow: inset 0 0 20px rgba(57, 255, 20, 0.2);
+}
+
+/* Audio Control Enhancement */
+.audio-control {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 1000;
+  color: var(--primary-color);
+  font-size: 20px;
+  transition: all 0.3s ease;
+  border: 1px solid var(--primary-color);
+  box-shadow: 0 0 5px var(--primary-color);
+}
+
+.audio-control:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
+}
+
+.audio-control.active {
+  color: var(--tertiary-color);
+  border: 1px solid var(--tertiary-color);
+  box-shadow: 0 0 5px var(--tertiary-color), 0 0 10px var(--tertiary-color);
+}
+
+/* Music Visualization Elements */
+.visualizer-element {
+  position: absolute;
+  background-color: var(--tertiary-color);
+  border-radius: 50%;
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 138;
+  box-shadow: 0 0 10px var(--tertiary-color);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* CPU Legs with Music Sync */
+.cpu-legs.beat-active {
+  background-color: var(--tertiary-color);
+  box-shadow: 0 0 10px var(--tertiary-color), 0 0 20px var(--tertiary-color);
+}
+
+.node-cpu-legs.beat-active {
+  background-color: var(--tertiary-color);
+  box-shadow: 0 0 10px var(--tertiary-color), 0 0 20px var(--tertiary-color);
+}

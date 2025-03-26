@@ -1,0 +1,93 @@
+/* Final Image and Animation Adjustments CSS */
+:root {
+  --primary-color: #00f0ff;
+  --secondary-color: #ff00e6;
+  --tertiary-color: #39ff14; /* Electric green */
+  --quaternary-color: #ffcc00; /* Amber */
+  --terminal-text: #16d9c5; /* Updated terminal text color as requested */
+  --circuit-color: #00f0ff;
+  --pulse-color: #39ff14; /* Electric green for pulses */
+  --background-color: #0a0a0a;
+  --terminal-bg: rgba(10, 10, 10, 0.8);
+  --glass-effect: rgba(255, 255, 255, 0.1);
+  --neon-glow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color), 0 0 30px var(--primary-color);
+  --neon-glow-secondary: 0 0 10px var(--secondary-color), 0 0 20px var(--secondary-color), 0 0 30px var(--secondary-color);
+  --neon-glow-tertiary: 0 0 10px var(--tertiary-color), 0 0 20px var(--tertiary-color), 0 0 30px var(--tertiary-color);
+  --neon-glow-quaternary: 0 0 10px var(--quaternary-color), 0 0 20px var(--quaternary-color), 0 0 30px var(--quaternary-color);
+  --terminal-glow: 0 0 10px var(--terminal-text), 0 0 20px var(--terminal-text), 0 0 30px var(--terminal-text);
+}
+
+/* Circular Profile Image */
+.profile-image {
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Updated CPU Design - Circular with maintained aspect ratio */
+.profile-image.centered {
+  position: fixed;
+  bottom: auto;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
+  z-index: 150;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  background-color: rgba(0, 0, 0, 1); /* Solid background, no transparency */
+  border: 2px solid var(--primary-color);
+  box-shadow: var(--neon-glow);
+  overflow: visible;
+  border-radius: 50%; /* Ensure circular shape */
+}
+
+/* Bass-reactive CPU animation that maintains aspect ratio */
+.profile-image.centered.bass-pulse {
+  animation: bass-pulse-animation-maintain-ratio 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+@keyframes bass-pulse-animation-maintain-ratio {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: var(--neon-glow);
+    border-color: var(--primary-color);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.15);
+    box-shadow: 0 0 20px var(--tertiary-color), 0 0 40px var(--tertiary-color), 0 0 60px var(--tertiary-color);
+    border-color: var(--tertiary-color);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: var(--neon-glow);
+    border-color: var(--primary-color);
+  }
+}
+
+/* Small CPUs - No movement, only color change */
+.node.cpu-style.bass-color-change {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Bass-reactive section titles */
+.section-header h2 {
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.section-header h2.bass-color-change {
+  color: var(--tertiary-color);
+  text-shadow: 0 0 10px var(--tertiary-color), 0 0 20px var(--tertiary-color);
+}
+
+/* CPU Glow effect for small CPUs */
+.node.cpu-style.bass-color-change {
+  border-color: var(--tertiary-color);
+  box-shadow: 0 0 10px var(--tertiary-color), 0 0 20px var(--tertiary-color), 0 0 30px var(--tertiary-color);
+}

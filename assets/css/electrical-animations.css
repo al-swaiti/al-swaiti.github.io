@@ -1,0 +1,245 @@
+/* Electrical Pulse Animations CSS */
+:root {
+  --primary-color: #00f0ff;
+  --secondary-color: #ff00e6;
+  --tertiary-color: #39ff14; /* Electric green */
+  --quaternary-color: #ffcc00; /* Amber */
+  --terminal-text: #ff7ac6; /* Luminescent pink/rose color */
+  --circuit-color: #00f0ff;
+  --pulse-color: #39ff14; /* Electric green for pulses */
+  --background-color: #0a0a0a;
+  --terminal-bg: rgba(10, 10, 10, 0.8);
+  --glass-effect: rgba(255, 255, 255, 0.1);
+  --neon-glow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color), 0 0 30px var(--primary-color);
+  --neon-glow-secondary: 0 0 10px var(--secondary-color), 0 0 20px var(--secondary-color), 0 0 30px var(--secondary-color);
+  --neon-glow-tertiary: 0 0 10px var(--tertiary-color), 0 0 20px var(--tertiary-color), 0 0 30px var(--tertiary-color);
+  --neon-glow-quaternary: 0 0 10px var(--quaternary-color), 0 0 20px var(--quaternary-color), 0 0 30px var(--quaternary-color);
+}
+
+/* CPU Design */
+.cpu-main {
+  position: relative;
+  border-radius: 10px;
+  overflow: visible;
+  transition: all 0.3s ease;
+}
+
+.cpu-main::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border-radius: 10px;
+  border: 2px solid var(--primary-color);
+  box-shadow: var(--neon-glow);
+  z-index: -1;
+}
+
+.cpu-legs {
+  position: absolute;
+  background-color: var(--primary-color);
+  height: 2px;
+  box-shadow: 0 0 5px var(--primary-color);
+}
+
+.cpu-leg-1 {
+  width: 15px;
+  top: -10px;
+  left: 10px;
+}
+
+.cpu-leg-2 {
+  width: 15px;
+  top: -10px;
+  right: 10px;
+}
+
+.cpu-leg-3 {
+  width: 15px;
+  bottom: -10px;
+  left: 10px;
+}
+
+.cpu-leg-4 {
+  width: 15px;
+  bottom: -10px;
+  right: 10px;
+}
+
+.cpu-leg-5 {
+  height: 15px;
+  width: 2px;
+  top: 10px;
+  left: -10px;
+}
+
+.cpu-leg-6 {
+  height: 15px;
+  width: 2px;
+  top: 10px;
+  right: -10px;
+}
+
+.cpu-leg-7 {
+  height: 15px;
+  width: 2px;
+  bottom: 10px;
+  left: -10px;
+}
+
+.cpu-leg-8 {
+  height: 15px;
+  width: 2px;
+  bottom: 10px;
+  right: -10px;
+}
+
+/* Child CPU Design */
+.node.cpu-style {
+  border-radius: 8px;
+  overflow: visible;
+}
+
+.node.cpu-style::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  border-radius: 8px;
+  border: 1px solid var(--secondary-color);
+  box-shadow: var(--neon-glow-secondary);
+  z-index: -1;
+}
+
+.node-cpu-legs {
+  position: absolute;
+  background-color: var(--secondary-color);
+  box-shadow: 0 0 5px var(--secondary-color);
+}
+
+.node-leg-h {
+  height: 1px;
+  width: 8px;
+}
+
+.node-leg-v {
+  width: 1px;
+  height: 8px;
+}
+
+/* Electrical Pulse Styles */
+.electrical-pulse {
+  position: absolute;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--pulse-color), transparent);
+  z-index: 142;
+  opacity: 0.8;
+  box-shadow: 0 0 10px var(--pulse-color);
+}
+
+.electrical-pulse.outgoing {
+  background: linear-gradient(90deg, transparent, var(--tertiary-color), transparent);
+  box-shadow: 0 0 10px var(--tertiary-color);
+}
+
+.electrical-pulse.returning {
+  background: linear-gradient(90deg, transparent, var(--quaternary-color), transparent);
+  box-shadow: 0 0 10px var(--quaternary-color);
+}
+
+/* CPU Receiving Pulse Effects */
+.profile-image.centered.receiving-pulse {
+  animation: cpu-receive-pulse 0.5s ease;
+}
+
+.node.cpu-style.receiving-pulse {
+  animation: node-receive-pulse 0.5s ease;
+}
+
+@keyframes cpu-receive-pulse {
+  0% {
+    box-shadow: 0 0 15px var(--primary-color), 0 0 30px var(--primary-color);
+  }
+  50% {
+    box-shadow: 0 0 25px var(--quaternary-color), 0 0 50px var(--quaternary-color), 0 0 75px var(--quaternary-color);
+  }
+  100% {
+    box-shadow: 0 0 15px var(--primary-color), 0 0 30px var(--primary-color);
+  }
+}
+
+@keyframes node-receive-pulse {
+  0% {
+    box-shadow: 0 0 10px var(--secondary-color), 0 0 20px var(--secondary-color);
+  }
+  50% {
+    box-shadow: 0 0 20px var(--tertiary-color), 0 0 40px var(--tertiary-color), 0 0 60px var(--tertiary-color);
+  }
+  100% {
+    box-shadow: 0 0 10px var(--secondary-color), 0 0 20px var(--secondary-color);
+  }
+}
+
+/* Enhanced Circuit Path Styles */
+.circuit-segment {
+  position: absolute;
+  background-color: var(--circuit-color);
+  height: 2px;
+  box-shadow: 0 0 5px var(--circuit-color), 0 0 10px var(--circuit-color);
+  transform-origin: left center;
+}
+
+.circuit-node {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background-color: var(--circuit-color);
+  border-radius: 50%;
+  box-shadow: 0 0 5px var(--circuit-color);
+  z-index: 141;
+}
+
+/* Connection Points with Improved Styling */
+.connection-point {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background-color: var(--circuit-color);
+  border-radius: 50%;
+  box-shadow: 0 0 5px var(--circuit-color);
+  z-index: 141;
+}
+
+/* Transparent Circuit Board Effect */
+.circuit-board {
+  position: absolute;
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  background-color: rgba(10, 10, 10, 0.3);
+  border-radius: 5px;
+  box-shadow: inset 0 0 10px rgba(0, 240, 255, 0.1);
+  z-index: 139;
+}
+
+/* Electrical Pulse Animation */
+@keyframes electrical-pulse-travel {
+  0% {
+    opacity: 0;
+    width: 10px;
+  }
+  10% {
+    opacity: 1;
+    width: 20px;
+  }
+  90% {
+    opacity: 1;
+    width: 20px;
+  }
+  100% {
+    opacity: 0;
+    width: 10px;
+  }
+}

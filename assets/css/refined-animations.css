@@ -1,0 +1,247 @@
+/* Refined Circuit Animations CSS */
+:root {
+  --primary-color: #00f0ff;
+  --secondary-color: #ff00e6;
+  --terminal-text: #ff7ac6; /* Luminescent pink/rose color */
+  --circuit-color: #00f0ff;
+  --pulse-color: #ff00e6;
+  --background-color: #0a0a0a;
+  --terminal-bg: rgba(10, 10, 10, 0.8);
+  --glass-effect: rgba(255, 255, 255, 0.1);
+  --neon-glow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color), 0 0 30px var(--primary-color);
+  --neon-glow-secondary: 0 0 10px var(--secondary-color), 0 0 20px var(--secondary-color), 0 0 30px var(--secondary-color);
+  --neon-glow-terminal: 0 0 10px var(--terminal-text), 0 0 20px var(--terminal-text), 0 0 30px var(--terminal-text);
+}
+
+.terminal-content {
+  color: var(--terminal-text);
+  text-shadow: var(--neon-glow-terminal);
+}
+
+.cursor {
+  background-color: var(--terminal-text);
+  box-shadow: var(--neon-glow-terminal);
+}
+
+/* Circuit Path Styles */
+.circuit-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 140;
+}
+
+.circuit-path {
+  position: absolute;
+  background-color: transparent;
+  z-index: 140;
+}
+
+.circuit-segment {
+  position: absolute;
+  background-color: var(--circuit-color);
+  height: 2px;
+  box-shadow: 0 0 5px var(--circuit-color), 0 0 10px var(--circuit-color);
+  transform-origin: left center;
+}
+
+.circuit-node {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background-color: var(--circuit-color);
+  border-radius: 50%;
+  box-shadow: 0 0 5px var(--circuit-color), 0 0 10px var(--circuit-color);
+  z-index: 141;
+}
+
+/* Data Pulse Styles */
+.data-bit {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background-color: var(--pulse-color);
+  border-radius: 50%;
+  z-index: 142;
+  box-shadow: 0 0 5px var(--pulse-color), 0 0 10px var(--pulse-color);
+}
+
+.data-bit::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--pulse-color) 0%, transparent 70%);
+  opacity: 0.5;
+  animation: pulse-glow 1s infinite;
+}
+
+.data-bit.returning {
+  background-color: var(--primary-color);
+  box-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color);
+}
+
+.data-bit.returning::before {
+  background: radial-gradient(circle, var(--primary-color) 0%, transparent 70%);
+}
+
+/* CPU Node Styles */
+.node.cpu-style {
+  overflow: visible;
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.node.cpu-style::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid var(--secondary-color);
+  animation: pulse-glow 2s infinite;
+  animation-delay: 0.5s;
+  z-index: -1;
+}
+
+.node.cpu-style::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid var(--secondary-color);
+  opacity: 0.5;
+  animation: pulse-glow 2s infinite;
+  animation-delay: 1s;
+  z-index: -2;
+}
+
+.node.cpu-style.active {
+  transform: scale(1.2);
+  box-shadow: 0 0 15px var(--secondary-color), 0 0 30px var(--secondary-color), 0 0 45px var(--secondary-color);
+}
+
+.node.cpu-style.processing::before {
+  animation: pulse-glow 0.5s infinite;
+}
+
+/* Main CPU Styles */
+.profile-image.centered {
+  position: fixed;
+  bottom: auto;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
+  z-index: 150;
+  transition: all 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.profile-image.centered::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  border-radius: 50%;
+  background: transparent;
+  border: 2px solid var(--primary-color);
+  animation: pulse-glow 2s infinite;
+  z-index: -1;
+}
+
+.profile-image.centered::after {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid var(--primary-color);
+  opacity: 0.5;
+  animation: pulse-glow 2s infinite;
+  animation-delay: 1s;
+  z-index: -2;
+}
+
+.profile-image.centered.processing {
+  box-shadow: 0 0 20px var(--primary-color), 0 0 40px var(--primary-color);
+}
+
+.profile-image.centered.processing::before {
+  animation: pulse-glow 0.5s infinite;
+}
+
+/* Circuit Connection Points */
+.connection-point {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background-color: var(--circuit-color);
+  border-radius: 50%;
+  box-shadow: 0 0 5px var(--circuit-color);
+  z-index: 141;
+}
+
+/* Enhanced Animations */
+@keyframes grow-circuit {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+  100% {
+    width: 100%;
+    opacity: 1;
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes data-travel {
+  0% {
+    transform: translateX(0) scale(0.8);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateX(50%) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%) scale(0.8);
+    opacity: 0.7;
+  }
+}
+
+@keyframes node-processing {
+  0%, 100% {
+    box-shadow: 0 0 10px var(--secondary-color), 0 0 20px var(--secondary-color);
+  }
+  50% {
+    box-shadow: 0 0 20px var(--secondary-color), 0 0 40px var(--secondary-color), 0 0 60px var(--secondary-color);
+  }
+}

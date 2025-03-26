@@ -1,0 +1,24 @@
+/* Terminal Header and Bio Text Updates */
+.terminal-role-header {
+  font-family: 'Orbitron', sans-serif !important;
+  font-size: 1.5rem !important; /* Larger font size */
+  margin-bottom: 15px;
+  color: #16d9c5;
+  text-shadow: 0 0 5px #16d9c5, 0 0 10px #16d9c5;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* Ensure terminal content has proper spacing */
+.terminal-content {
+  padding: 15px;
+  line-height: 1.6;
+}
+
+/* Make sure the terminal text is properly styled */
+#terminal-text {
+  font-family: 'Fira Code', monospace !important;
+  color: #16d9c5;
+  font-size: 1rem;
+  white-space: pre-wrap;
+}
