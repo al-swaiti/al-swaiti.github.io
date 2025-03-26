@@ -44,13 +44,21 @@ document.addEventListener('DOMContentLoaded', function() {
     let neuralNodes = [];
     let neuralConnections = [];
     
-    // Simulate audio for quick visual testing
-    let simulateAudio = false;
-    let testMode = false;
+    // Simulate audio for quick visual testing - ENABLED
+    let simulateAudio = true;
+    let testMode = true;
     
     // Force remove muted class to ensure effect is visible
     if (equalizer) {
         equalizer.classList.remove('equalizer-muted');
+    }
+    
+    // Start visualizeTest automatically
+    if (testMode && simulateAudio) {
+        console.log("Starting music visualization simulation...");
+        setTimeout(() => {
+            visualizeTest();
+        }, 1000);
     }
     
     // Create circular audio reactive effect for profile image
@@ -132,26 +140,103 @@ document.addEventListener('DOMContentLoaded', function() {
     function visualizeTest() {
         if (!simulateAudio) return;
         
-        // Generate random frequencies
+        // Generate random frequencies with wave patterns for more natural feel
+        const time = Date.now() / 1000;
         const testData = [];
-        for (let i = 0; i < 4; i++) {
-            // Random value between 50 and 230
-            testData.push(50 + Math.floor(Math.random() * 180));
+        
+        // Create sinusoidal patterns with random variations for realistic effect
+        // Bass frequencies (low end)
+        const bassSin = Math.sin(time * 1.5) * 0.5 + 0.5;
+        const bassValue = 100 + Math.floor(bassSin * 155) + (Math.random() * 20 - 10);
+        testData.push(Math.min(255, Math.max(0, bassValue)));
+        
+        // Mid frequencies with slight phase offset
+        const midSin = Math.sin(time * 2.2 + 0.4) * 0.5 + 0.5;
+        const midValue = 80 + Math.floor(midSin * 175) + (Math.random() * 15 - 7.5);
+        testData.push(Math.min(255, Math.max(0, midValue)));
+        
+        // High-mid frequencies with different phase
+        const highMidSin = Math.sin(time * 3.7 + 1.2) * 0.5 + 0.5;
+        const highMidValue = 60 + Math.floor(highMidSin * 195) + (Math.random() * 12 - 6);
+        testData.push(Math.min(255, Math.max(0, highMidValue)));
+        
+        // Treble frequencies with faster oscillation
+        const trebleSin = Math.sin(time * 4.8 + 2.1) * 0.5 + 0.5;
+        const trebleValue = 40 + Math.floor(trebleSin * 215) + (Math.random() * 10 - 5);
+        testData.push(Math.min(255, Math.max(0, trebleValue)));
+        
+        // Occasional "beat drops" for dramatic effect
+        const beatDrop = Math.random() > 0.98;
+        if (beatDrop) {
+            testData[0] = 230 + Math.random() * 25; // Strong bass hit
+            console.log("Beat drop!");
         }
         
         // Calculate simulated levels
         const bassLevel = testData[0] / 255;
         const midLevel = testData[1] / 255;
-        const trebleLevel = testData[2] / 255;
+        const highMidLevel = testData[2] / 255;
+        const trebleLevel = testData[3] / 255;
         
         // Update visualizations
         updateEqualizerBars(testData);
         updateTerminalTextColor(bassLevel, midLevel, trebleLevel);
         updateProfileImageEffects(bassLevel, midLevel, trebleLevel);
         updateContentSectionsGlow(bassLevel, midLevel, trebleLevel);
+        updateCircuitConnections(bassLevel, midLevel, trebleLevel);
+        
+        // Log some values occasionally for debugging
+        if (testMode && Math.random() > 0.99) {
+            console.log("Simulated audio levels:", {
+                bass: Math.floor(bassLevel * 100) + "%",
+                mid: Math.floor(midLevel * 100) + "%",
+                treble: Math.floor(trebleLevel * 100) + "%"
+            });
+        }
         
         // Call this function again on the next frame
         requestAnimationFrame(visualizeTest);
+    }
+    
+    // Update circuit connections based on audio levels
+    function updateCircuitConnections(bassLevel, midLevel, trebleLevel) {
+        const circuitConnections = document.querySelectorAll('.circuit-connection');
+        if (!circuitConnections.length) return;
+        
+        circuitConnections.forEach(circuit => {
+            // Update pulse speed based on mid frequencies
+            const pulseSpeed = 3 - (midLevel * 2); // Between 1s-3s
+            circuit.style.setProperty('--electric-pulse-speed', `${pulseSpeed}s`);
+            
+            // Update data pulse opacity based on bass
+            const pulseOpacity = 0.5 + (bassLevel * 0.5); // Between 0.5-1.0
+            circuit.style.setProperty('--data-pulse-opacity', pulseOpacity);
+            
+            // Update node glow intensity based on treble
+            const nodeGlow = trebleLevel * 1.5; // Between 0-1.5
+            circuit.style.setProperty('--node-glow-intensity', nodeGlow);
+            
+            // Update circuit nodes
+            const nodes = circuit.querySelectorAll('.circuit-node');
+            nodes.forEach(node => {
+                // Adjust the glow intensity based on treble frequencies
+                const glowColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim();
+                node.style.boxShadow = `0 0 ${8 + (trebleLevel * 10)}px ${glowColor}`;
+            });
+            
+            // Update data pulses
+            const dataPulses = circuit.querySelectorAll('.data-pulse, .data-pulse-reverse');
+            dataPulses.forEach(pulse => {
+                // Make pulses brighter when bass hits
+                if (bassLevel > 0.7) {
+                    pulse.style.width = `${15 + (bassLevel * 10)}px`;
+                    pulse.style.height = `${3 + (bassLevel * 2)}px`;
+                } else {
+                    pulse.style.width = '15px';
+                    pulse.style.height = '3px';
+                }
+            });
+        });
     }
     
     // Animation loop for visualizer
@@ -188,6 +273,7 @@ document.addEventListener('DOMContentLoaded', function() {
         updateTerminalTextColor(bassLevel, midLevel, trebleLevel);
         updateProfileImageEffects(bassLevel, midLevel, trebleLevel);
         updateContentSectionsGlow(bassLevel, midLevel, trebleLevel);
+        updateCircuitConnections(bassLevel, midLevel, trebleLevel);
         
         // Update CPU mind map visualization
         updateCPUMindMap(bassLevel, midLevel, trebleLevel);
@@ -289,59 +375,83 @@ document.addEventListener('DOMContentLoaded', function() {
         terminalText.style.textShadow = `0 0 ${shadowSize}px hsl(${hue}, 100%, 60%)`;
     }
     
-    // Update profile image effects based on audio
-    function updateProfileImageEffects(bass, mid, treble) {
+    // Update profile image effects based on audio levels
+    function updateProfileImageEffects(bassLevel, midLevel, trebleLevel) {
         if (!profileImage) return;
         
-        // Don't update if audio is paused and we're not in test mode
-        if (backgroundAudio.paused && !simulateAudio) {
-            // Reset profile image effects
-            profileImage.style.transform = profileInNavigation ? '' : 'translateX(-50%)';
-            profileImage.style.boxShadow = '';
-            return;
-        }
-        
-        // Use bass level for pulse effect
-        const pulseScale = 1 + (bass * 0.08);
-        profileImage.style.transform = `${profileInNavigation ? '' : 'translateX(-50%)'} scale(${pulseScale})`;
-        
-        // Use mid level for glow effect
-        const glowOpacity = 0.5 + (mid * 0.5);
-        const glowBlur = 5 + (mid * 20);
-        profileImage.style.boxShadow = `0 0 ${glowBlur}px rgba(var(--primary-rgb), ${glowOpacity})`;
-        
-        // Update audio circles
-        const circles = profileImage.querySelectorAll('.audio-circle');
-        circles.forEach((circle, index) => {
-            // Scale and opacity based on different frequency bands
-            let scaleValue, opacityValue;
+        // Apply audio-reactive effects to the profile image
+        // Even when audio is paused, apply effects if simulateAudio is true
+        if (!backgroundAudio.paused || simulateAudio) {
+            const glowIntensity = Math.min(1, bassLevel * 1.5);
+            const scaleEffect = 1 + (midLevel * 0.1);
+            const hueRotate = Math.floor(trebleLevel * 30);
             
-            switch(index % 3) {
-                case 0: // Bass affects first circle
-                    scaleValue = 1 + (bass * 0.8);
-                    opacityValue = 0.3 + (bass * 0.7);
-                    break;
-                case 1: // Mid affects second circle
-                    scaleValue = 1 + (mid * 0.5);
-                    opacityValue = 0.2 + (mid * 0.8);
-                    break;
-                case 2: // Treble affects third circle
-                    scaleValue = 1 + (treble * 0.3);
-                    opacityValue = 0.1 + (treble * 0.9);
-                    break;
+            // Update glow intensity based on bass
+            const profileBefore = profileImage.querySelector('::before');
+            if (profileBefore) {
+                profileBefore.style.boxShadow = `
+                    0 0 ${10 + Math.floor(bassLevel * 20)}px rgba(255, 0, 230, ${0.7 + bassLevel * 0.3}),
+                    0 0 ${20 + Math.floor(midLevel * 30)}px rgba(255, 0, 230, ${0.5 + midLevel * 0.3}),
+                    0 0 ${30 + Math.floor(trebleLevel * 40)}px rgba(77, 119, 255, ${0.5 + trebleLevel * 0.3})
+                `;
             }
             
-            circle.style.transform = `scale(${scaleValue})`;
-            circle.style.opacity = opacityValue;
+            // Update animation speed based on audio levels
+            document.documentElement.style.setProperty('--electric-pulse-speed', `${3 - bassLevel}s`);
             
-            // Dynamic color based on intensity
-            const hue = (index * 120 + (treble * 180)) % 360;
-            circle.style.borderColor = `hsla(${hue}, 100%, 70%, ${opacityValue})`;
+            // Apply subtle scale to profile image based on mid frequencies
+            profileImage.style.transform = `scale(${scaleEffect})`;
             
-            // Add glow based on audio intensity
-            const glowSize = 3 + (bass * 15);
-            circle.style.boxShadow = `0 0 ${glowSize}px hsla(${hue}, 100%, 60%, ${opacityValue})`;
-        });
+            // Update audio rings if they exist
+            updateAudioRings(true, bassLevel, midLevel, trebleLevel);
+        } else {
+            // Reset effects when audio is paused
+            profileImage.style.transform = '';
+            updateAudioRings(false);
+        }
+    }
+    
+    // Update audio rings with enhanced effects
+    function updateAudioRings(isPlaying, bassLevel = 0.5, midLevel = 0.5, trebleLevel = 0.5) {
+        const audioRings = document.querySelectorAll('.audio-ring');
+        
+        if (isPlaying || simulateAudio) {
+            // Enhanced dynamic effects based on audio levels
+            audioRings.forEach((ring, index) => {
+                const baseSpeed = 2 + (index * 0.2);
+                const intensity = bassLevel * 1.2;
+                const scale = 0.9 + (midLevel * 0.2);
+                const speed = baseSpeed - (intensity * 0.5);
+                
+                // Create unique animation for each ring based on audio
+                ring.style.animation = `audio-pulse ${speed}s infinite alternate ${index * 0.3}s`;
+                ring.style.opacity = 0.2 + (intensity * 0.8);
+                ring.style.transform = `translate(-50%, -50%) scale(${scale})`;
+                
+                // Adjust color based on treble
+                const hue = 280 + (trebleLevel * 80);
+                if (index === 0) {
+                    ring.style.borderColor = `hsl(180, 100%, ${50 + trebleLevel * 20}%)`;
+                    ring.style.boxShadow = `0 0 ${10 + trebleLevel * 10}px hsl(180, 100%, ${50 + trebleLevel * 20}%)`;
+                } else if (index === 1) {
+                    ring.style.borderColor = `hsl(${hue}, 100%, ${50 + midLevel * 20}%)`;
+                    ring.style.boxShadow = `0 0 ${10 + midLevel * 10}px hsl(${hue}, 100%, ${50 + midLevel * 20}%)`;
+                } else if (index === 2) {
+                    ring.style.borderColor = `hsl(320, 100%, ${50 + bassLevel * 20}%)`;
+                    ring.style.boxShadow = `0 0 ${10 + bassLevel * 10}px hsl(320, 100%, ${50 + bassLevel * 20}%)`;
+                } else {
+                    ring.style.borderColor = `hsl(220, 100%, ${50 + (bassLevel + trebleLevel) * 10}%)`;
+                    ring.style.boxShadow = `0 0 ${10 + (bassLevel + trebleLevel) * 5}px hsl(220, 100%, ${50 + (bassLevel + trebleLevel) * 10}%)`;
+                }
+            });
+        } else {
+            // Reset effects when audio is paused
+            audioRings.forEach(ring => {
+                ring.style.animation = 'none';
+                ring.style.opacity = '0.2';
+                ring.style.transform = '';
+            });
+        }
     }
     
     // Update content sections with glow effects based on audio levels
@@ -692,6 +802,7 @@ document.addEventListener('DOMContentLoaded', function() {
         updateProfileImageEffects(simulatedBass, simulatedMid, simulatedTreble);
         updateCPUMindMap(simulatedBass, simulatedMid, simulatedTreble);
         updateContentSectionsGlow(simulatedBass, simulatedMid, simulatedTreble);
+        updateCircuitConnections(simulatedBass, simulatedMid, simulatedTreble);
         
         // Occasionally trigger terminal glitch effect based on simulated bass drops
         if (simulatedBass > 0.8 && Math.random() < 0.05) {

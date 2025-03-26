@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="assets/css/refined-animations.css">
     <link rel="stylesheet" href="assets/css/electrical-animations.css">
     <link rel="stylesheet" href="assets/css/music-sync.css">
-    <!-- <link rel="stylesheet" href="assets/css/final-refinements.css"> -->
+    <link rel="stylesheet" href="assets/css/final-refinements.css">
     <link rel="stylesheet" href="assets/css/final-adjustments.css">
     <link rel="stylesheet" href="assets/css/final-color-refinements.css">
     <link rel="stylesheet" href="assets/css/social-typography.css">
@@ -982,6 +982,22 @@
                     circuitLine.style.top = `${centerY}px`;
                     circuitLine.style.left = `${centerX}px`;
                     circuitLine.style.transform = `rotate(${angle}deg)`;
+                    
+                    // Create circuit nodes for enhanced cyberpunk look
+                    for (let i = 1; i <= 4; i++) {
+                        const circuitNode = document.createElement('div');
+                        circuitNode.className = `circuit-node circuit-node-${i}`;
+                        circuitLine.appendChild(circuitNode);
+                    }
+                    
+                    // Add data pulses for electric effect
+                    const dataPulse = document.createElement('div');
+                    dataPulse.className = 'data-pulse';
+                    circuitLine.appendChild(dataPulse);
+                    
+                    const dataPulseReverse = document.createElement('div');
+                    dataPulseReverse.className = 'data-pulse-reverse';
+                    circuitLine.appendChild(dataPulseReverse);
                     
                     // Animate connection
                     circuit.style.animation = 'electrical-pulse 2s infinite 0.8s';

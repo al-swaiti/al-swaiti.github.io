@@ -13,11 +13,17 @@
   --primary-color: #00f0ff;
   --secondary-color: #ff00e6;
   --background-color: #0a0a0a;
-  --terminal-bg: rgba(10, 10, 10, 0.8);
-  --terminal-text: #00ff00;
+  --terminal-bg: rgba(0, 10, 20, 0.7);
+  --terminal-text: #00f0ff;
   --glass-effect: rgba(255, 255, 255, 0.1);
-  --neon-glow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color), 0 0 30px var(--primary-color);
-  --neon-glow-secondary: 0 0 10px var(--secondary-color), 0 0 20px var(--secondary-color), 0 0 30px var(--secondary-color);
+  --backdrop-filter: blur(10px);
+  --neon-glow: 0 0 10px rgba(0, 240, 255, 0.8), 0 0 20px rgba(0, 240, 255, 0.5), 0 0 30px rgba(0, 240, 255, 0.3);
+  --neon-glow-2: 0 0 10px rgba(255, 0, 230, 0.8), 0 0 20px rgba(255, 0, 230, 0.5), 0 0 30px rgba(255, 0, 230, 0.3);
+  --neon-glow-3: 0 0 10px rgba(153, 0, 255, 0.8), 0 0 20px rgba(153, 0, 255, 0.5), 0 0 30px rgba(153, 0, 255, 0.3);
+  --neon-glow-4: 0 0 10px rgba(0, 153, 255, 0.8), 0 0 20px rgba(0, 153, 255, 0.5), 0 0 30px rgba(0, 153, 255, 0.3);
+  --box-shadow-color: rgba(0, 240, 255, 0.5);
+  --button-glow: 0 0 10px rgba(0, 240, 255, 0.5);
+  --electric-pulse-speed: 3s;
 }
 
 * {
@@ -117,8 +123,8 @@ body {
   position: fixed;
   bottom: 20px;
   left: 20px;
-  width: 100px;
-  height: 100px;
+  width: 66px;
+  height: 66px;
   border-radius: 50%;
   overflow: visible;
   z-index: 100;
@@ -181,7 +187,7 @@ body {
     0 0 30px rgba(255, 0, 230, 0.7),
     0 0 45px rgba(77, 119, 255, 0.7),
     0 0 60px rgba(77, 119, 255, 0.5);
-  animation: electric-pulse 3s ease-in-out infinite alternate;
+  animation: electric-pulse var(--electric-pulse-speed) ease-in-out infinite alternate;
 }
 
 @keyframes electric-pulse {
@@ -218,8 +224,8 @@ body {
   top: 40px;
   left: 50%;
   transform: translateX(-50%);
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   overflow: visible;
   border: none;
@@ -244,6 +250,8 @@ body {
   color: var(--primary-color);
   text-shadow: var(--neon-glow);
   white-space: nowrap;
+  margin: 0 auto;
+  display: block;
 }
 
 /* Terminal Container */
@@ -258,7 +266,7 @@ body {
   background-color: var(--terminal-bg);
   border-radius: 10px;
   overflow: hidden;
-  backdrop-filter: blur(10px);
+  backdrop-filter: var(--backdrop-filter);
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
   z-index: 100;
   border: 1px solid var(--glass-effect);
@@ -506,7 +514,7 @@ body:has(.profile-image.main-title) .terminal-container {
     0 0 30px rgba(255, 0, 230, 0.7),
     0 0 45px rgba(77, 119, 255, 0.7),
     0 0 60px rgba(77, 119, 255, 0.5);
-  animation: electric-pulse 3s ease-in-out infinite alternate;
+  animation: electric-pulse var(--electric-pulse-speed) ease-in-out infinite alternate;
 }
 
 .node {
@@ -972,13 +980,13 @@ body:has(.profile-image.main-title) .terminal-container {
   }
   
   .profile-image {
-    width: 80px;
-    height: 80px;
+    width: 53px;
+    height: 53px;
   }
   
   .profile-image.main-title {
-    width: 120px;
-    height: 120px;
+    width: 80px;
+    height: 80px;
     top: 20px;
   }
   
@@ -1254,7 +1262,7 @@ body:has(.profile-image.main-title) .terminal-container {
   }
 }
 
-/* Circuit Connections from Center to CPUs */
+/* Circuit Connections from Center to CPUs - styled like cyberpunk circuit board */
 .circuit-connection {
   position: absolute;
   top: 50%;
@@ -1264,57 +1272,123 @@ body:has(.profile-image.main-title) .terminal-container {
   transform-origin: left center;
   box-shadow: 0 0 8px var(--primary-color);
   z-index: 203;
+  overflow: visible;
+  --data-pulse-opacity: 0.8;
+  --node-glow-intensity: 1;
 }
 
-.connection-1 {
+/* Circuit path styling with right angles */
+.circuit-connection::before, 
+.circuit-connection::after {
+  content: '';
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background-color: transparent;
+  z-index: 204;
+}
+
+/* First right angle */
+.circuit-connection::before {
+  left: 33%;
+  top: -8px;
+  border-top: 2px solid var(--primary-color);
+  border-right: 2px solid var(--primary-color);
+  box-shadow: 0 0 5px var(--primary-color);
+}
+
+/* Second right angle */
+.circuit-connection::after {
+  left: 66%;
+  top: -8px;
+  border-bottom: 2px solid var(--secondary-color);
+  border-left: 2px solid var(--secondary-color);
+  box-shadow: 0 0 5px var(--secondary-color);
+}
+
+/* Projects section connection (top-left) */
+.circuit-connection.projects {
   transform: rotate(45deg);
   width: 35vmin;
+  --circuit-angle: 135deg;
 }
 
-.connection-2 {
+/* Experience section connection (top-right) */
+.circuit-connection.experience {
   transform: rotate(135deg);
   width: 35vmin;
+  --circuit-angle: 225deg;
 }
 
-.connection-3 {
+/* Education section connection (bottom-left) */
+.circuit-connection.education {
   transform: rotate(225deg);
   width: 35vmin;
+  --circuit-angle: 315deg;
 }
 
-.connection-4 {
+/* Arts section connection (bottom-right) */
+.circuit-connection.arts {
   transform: rotate(315deg);
   width: 35vmin;
+  --circuit-angle: 45deg;
 }
 
-/* Electrical Pulse Animation */
-.electrical-pulse-particle {
+/* Circuit nodes along the connections */
+.circuit-node {
   position: absolute;
-  width: 10px;
+  width: 6px;
+  height: 6px;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--primary-color);
+  z-index: 204;
+  animation: node-pulse var(--electric-pulse-speed) infinite alternate;
+}
+
+@keyframes node-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 8px var(--primary-color);
+  }
+  50% {
+    transform: scale(1.3);
+    box-shadow: 0 0 12px var(--primary-color);
+  }
+}
+
+.circuit-node-1 { left: 20%; top: -2px; animation-delay: 0.0s; }
+.circuit-node-2 { left: 40%; top: -2px; animation-delay: 0.3s; }
+.circuit-node-3 { left: 60%; top: -2px; animation-delay: 0.6s; }
+.circuit-node-4 { left: 80%; top: -2px; animation-delay: 0.9s; }
+
+/* Data pulse animations */
+.data-pulse, .data-pulse-reverse {
+  position: absolute;
+  width: 15px;
   height: 3px;
-  background: linear-gradient(to right, transparent, var(--primary-color), transparent);
+  background: linear-gradient(to right, transparent, var(--primary-color), var(--secondary-color), transparent);
   border-radius: 3px;
   box-shadow: 0 0 10px var(--primary-color);
   z-index: 204;
-  opacity: 0;
-  animation: pulse-travel 2s linear infinite;
+  animation: data-pulse-forward var(--electric-pulse-speed) linear infinite;
 }
 
-.return-pulse {
-  animation: pulse-return 2s linear infinite;
-  background: linear-gradient(to left, transparent, var(--secondary-color), transparent);
-  box-shadow: 0 0 10px var(--secondary-color);
+.data-pulse-reverse {
+  background: linear-gradient(to left, transparent, var(--secondary-color), var(--primary-color), transparent);
+  animation: data-pulse-reverse calc(var(--electric-pulse-speed) * 0.8) linear infinite;
 }
 
-@keyframes pulse-travel {
+@keyframes data-pulse-forward {
   0% {
     left: 0%;
     opacity: 0;
   }
   10% {
-    opacity: 1;
+    opacity: var(--data-pulse-opacity, 0.8);
   }
   90% {
-    opacity: 1;
+    opacity: var(--data-pulse-opacity, 0.8);
   }
   100% {
     left: 100%;
@@ -1322,19 +1396,21 @@ body:has(.profile-image.main-title) .terminal-container {
   }
 }
 
-@keyframes pulse-return {
+@keyframes data-pulse-reverse {
   0% {
-    left: 100%;
+    right: 0%;
+    left: auto;
     opacity: 0;
   }
   10% {
-    opacity: 1;
+    opacity: var(--data-pulse-opacity, 0.8);
   }
   90% {
-    opacity: 1;
+    opacity: var(--data-pulse-opacity, 0.8);
   }
   100% {
-    left: 0%;
+    right: 100%;
+    left: auto;
     opacity: 0;
   }
 }
