@@ -56,6 +56,9 @@ body {
   overflow: hidden;
   height: 100vh;
   width: 100vw;
+  margin: 0;
+  padding: 0;
+  position: relative;
 }
 
 /* Fullscreen Video Containers */
@@ -63,37 +66,41 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   z-index: 1000;
   background-color: black;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
-#intro-video, #background-video {
-  min-width: 100%;
-  min-height: 100%;
-  object-fit: cover;
+#intro-video {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
 }
 
 #background-video {
   position: fixed;
   top: 0;
   left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+  opacity: 0.4;
+  filter: blur(3px) brightness(0.8);
   min-width: 100%;
   min-height: 100%;
-  width: auto;
-  height: auto;
-  z-index: -1;
-  object-fit: cover;
-  opacity: 0.6;
-  filter: blur(2px);
+  transform: none;
 }
 
 .skip-intro {
@@ -245,6 +252,7 @@ body {
   box-shadow: none;
   z-index: 100;
   transition: all 0.3s ease;
+  margin-bottom: 40px; /* Add space for the name */
 }
 
 .profile-image.main-title:hover {
@@ -255,16 +263,16 @@ body {
 .profile-name {
   position: absolute;
   bottom: -40px;
-  left: 40%; /* Even further left from 45% */
-  transform: translateX(-50%);
-  width: 100%;
-  text-align: center;
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Center the text */
+  width: auto;
+  text-align: center; /* Center the text */
   font-family: 'Orbitron', sans-serif;
   font-size: 18px;
   color: var(--primary-color);
   text-shadow: var(--neon-glow);
   white-space: nowrap;
-  margin: 0 auto;
+  margin: 0;
   display: block;
 }
 
@@ -287,6 +295,7 @@ body {
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   animation: terminal-glow 10s infinite alternate;
+  background: rgba(8, 12, 24, 0.95);
 }
 
 @keyframes terminal-glow {
@@ -754,6 +763,17 @@ body:has(.profile-image.main-title) .terminal-container {
   font-size: 20px;
   margin-bottom: 10px;
   color: white;
+}
+
+.project-details h3 a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.project-details h3 a:hover {
+  color: var(--secondary-color);
+  text-shadow: var(--neon-glow-secondary);
 }
 
 .project-details p {
