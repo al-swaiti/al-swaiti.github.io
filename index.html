@@ -999,6 +999,11 @@
                     dataPulseReverse.className = 'data-pulse-reverse';
                     circuitLine.appendChild(dataPulseReverse);
                     
+                    // Add CPU endpoint at the end of circuit line
+                    const cpuEndpoint = document.createElement('div');
+                    cpuEndpoint.className = 'circuit-cpu-endpoint';
+                    circuitLine.appendChild(cpuEndpoint);
+                    
                     // Animate connection
                     circuit.style.animation = 'electrical-pulse 2s infinite 0.8s';
                 });
