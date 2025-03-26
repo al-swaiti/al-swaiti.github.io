@@ -133,17 +133,17 @@ body {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  border: 2px solid var(--primary-color);
+  border: 3px solid rgba(255, 0, 230, 0.9);
   transform: translate(-50%, -50%);
   animation: pulse-rings 3s linear infinite;
-  box-shadow: var(--neon-glow);
+  box-shadow: 0 0 15px #ff00e6, 0 0 25px #ff00e6, 0 0 35px #ff00e6;
   z-index: -1;
 }
 
 .profile-image::after {
   animation-delay: 1.5s;
-  border-color: var(--secondary-color);
-  box-shadow: var(--neon-glow-secondary);
+  border-color: rgba(0, 240, 255, 0.9);
+  box-shadow: 0 0 15px #00f0ff, 0 0 25px #00f0ff, 0 0 35px #00f0ff;
 }
 
 .profile-image img {
@@ -151,20 +151,64 @@ body {
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
-  border: 2px solid var(--primary-color);
-  box-shadow: var(--neon-glow);
+  border: 3px solid transparent;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+  background: #000;
 }
 
-@keyframes pulse-rings {
+/* Enhanced intense glow effect for profile image - matching the provided image */
+.profile-image::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 110%;
+  height: 110%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    rgba(0, 0, 0, 0.5) 40%,
+    rgba(77, 119, 255, 0.7) 45%, 
+    rgba(77, 119, 255, 0.6) 47%,
+    rgba(255, 0, 230, 0.9) 60%,
+    rgba(255, 0, 230, 0.7) 70%,
+    transparent 75%
+  );
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  box-shadow: 
+    0 0 15px rgba(255, 0, 230, 0.9),
+    0 0 30px rgba(255, 0, 230, 0.7),
+    0 0 45px rgba(77, 119, 255, 0.7),
+    0 0 60px rgba(77, 119, 255, 0.5);
+  animation: electric-pulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes electric-pulse {
   0% {
-    width: 100%;
-    height: 100%;
+    opacity: 0.7;
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 
+      0 0 15px rgba(255, 0, 230, 0.9),
+      0 0 30px rgba(255, 0, 230, 0.7),
+      0 0 45px rgba(77, 119, 255, 0.7);
+  }
+  50% {
     opacity: 1;
+    transform: translate(-50%, -50%) scale(1.05);
+    box-shadow: 
+      0 0 20px rgba(255, 0, 230, 1),
+      0 0 40px rgba(255, 0, 230, 0.8),
+      0 0 60px rgba(77, 119, 255, 0.8),
+      0 0 80px rgba(77, 119, 255, 0.6);
   }
   100% {
-    width: 200%;
-    height: 200%;
-    opacity: 0;
+    opacity: 0.9;
+    transform: translate(-50%, -50%) scale(0.98);
+    box-shadow: 
+      0 0 10px rgba(255, 0, 230, 0.8),
+      0 0 25px rgba(255, 0, 230, 0.6),
+      0 0 40px rgba(77, 119, 255, 0.6);
   }
 }
 
@@ -177,15 +221,14 @@ body {
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  overflow: hidden;
-  border: 3px solid var(--primary-color);
-  box-shadow: var(--neon-glow);
+  overflow: visible;
+  border: none;
+  box-shadow: none;
   z-index: 100;
   transition: all 0.3s ease;
 }
 
 .profile-image.main-title:hover {
-  box-shadow: 0 0 15px var(--primary-color), 0 0 30px var(--primary-color), 0 0 45px var(--primary-color);
   transform: translateX(-50%) scale(1.05);
 }
 
@@ -434,15 +477,12 @@ body:has(.profile-image.main-title) .terminal-container {
   transform: none !important;
   border-radius: 50%;
   overflow: hidden;
-  border: 2px solid var(--primary-color);
   box-shadow: var(--neon-glow);
   animation: neon-pulse 2s infinite;
   z-index: 215;
 }
 
-/* Mind map profile image audio rings */
-.mind-map-profile::before,
-.mind-map-profile::after {
+.mind-map-profile::before {
   content: '';
   position: absolute;
   top: 50%;
@@ -450,38 +490,23 @@ body:has(.profile-image.main-title) .terminal-container {
   width: 110%;
   height: 110%;
   border-radius: 50%;
-  border: 2px solid var(--primary-color);
+  background: radial-gradient(
+    circle at center,
+    rgba(0, 0, 0, 0.5) 40%,
+    rgba(77, 119, 255, 0.7) 45%, 
+    rgba(77, 119, 255, 0.6) 47%,
+    rgba(255, 0, 230, 0.9) 60%,
+    rgba(255, 0, 230, 0.7) 70%,
+    transparent 75%
+  );
   transform: translate(-50%, -50%);
-  animation: mind-map-rings 4s linear infinite;
-  box-shadow: var(--neon-glow);
-  z-index: 214;
-}
-
-.mind-map-profile::after {
-  width: 130%;
-  height: 130%;
-  animation-delay: 2s;
-  border-color: var(--secondary-color);
-  box-shadow: var(--neon-glow-secondary);
-}
-
-@keyframes mind-map-rings {
-  0% {
-    width: 110%;
-    height: 110%;
-    opacity: 1;
-    border-width: 2px;
-  }
-  50% {
-    opacity: 0.5;
-    border-width: 1px;
-  }
-  100% {
-    width: 200%;
-    height: 200%;
-    opacity: 0;
-    border-width: 1px;
-  }
+  z-index: -1;
+  box-shadow: 
+    0 0 15px rgba(255, 0, 230, 0.9),
+    0 0 30px rgba(255, 0, 230, 0.7),
+    0 0 45px rgba(77, 119, 255, 0.7),
+    0 0 60px rgba(77, 119, 255, 0.5);
+  animation: electric-pulse 3s ease-in-out infinite alternate;
 }
 
 .node {
@@ -1374,8 +1399,20 @@ body:has(.profile-image.main-title) .terminal-container {
   transform: none !important;
   border-radius: 50%;
   overflow: hidden;
-  border: 2px solid var(--primary-color);
   box-shadow: var(--neon-glow);
   animation: neon-pulse 2s infinite;
   z-index: 215;
+}
+
+@keyframes pulse-rings {
+  0% {
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+  }
+  100% {
+    width: 200%;
+    height: 200%;
+    opacity: 0;
+  }
 }
