@@ -15,10 +15,10 @@
 
 @keyframes pulse-glow {
   0%, 100% {
-    box-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
+    box-shadow: 0 0 15px var(--primary-color), 0 0 30px var(--primary-color);
   }
   50% {
-    box-shadow: 0 0 15px var(--primary-color), 0 0 30px var(--primary-color), 0 0 45px var(--primary-color);
+    box-shadow: 0 0 25px var(--primary-color), 0 0 50px var(--primary-color), 0 0 75px var(--primary-color);
   }
 }
 
@@ -28,6 +28,30 @@
   }
   50% {
     opacity: 1;
+  }
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes node-glow {
+  0% {
+    filter: hue-rotate(0deg) brightness(1);
+  }
+  50% {
+    filter: hue-rotate(180deg) brightness(1.2);
+  }
+  100% {
+    filter: hue-rotate(360deg) brightness(1);
   }
 }
 
@@ -60,9 +84,10 @@
   right: -10px;
   bottom: -10px;
   border-radius: 50%;
-  background: transparent;
-  border: 2px solid var(--primary-color);
-  animation: pulse-glow 2s infinite;
+  background: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff);
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
+  opacity: 0.3;
   z-index: -1;
 }
 
@@ -79,26 +104,33 @@
 
 .circuit-path {
   position: absolute;
-  background-color: var(--primary-color);
+  background: linear-gradient(90deg, #ff00ff, #00ffff);
   height: 2px;
   transform-origin: left center;
   z-index: 140;
-  box-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color);
+  box-shadow: 0 0 10px rgba(255, 0, 255, 0.5), 0 0 20px rgba(0, 255, 255, 0.5);
+  animation: gradient-shift 2s linear infinite;
 }
 
 .data-bit {
   position: absolute;
   width: 4px;
   height: 4px;
-  background-color: white;
+  background: linear-gradient(45deg, #ff00ff, #00ffff);
   border-radius: 50%;
   z-index: 141;
-  box-shadow: 0 0 5px white;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
   animation: data-pulse 1s infinite;
 }
 
 .node.cpu-style {
   overflow: visible;
+  transition: all 0.3s ease;
+}
+
+.node.cpu-style:hover {
+  transform: scale(1.1);
+  filter: brightness(1.2);
 }
 
 .node.cpu-style::before {
@@ -109,10 +141,10 @@
   right: -5px;
   bottom: -5px;
   border-radius: 50%;
-  background: transparent;
-  border: 1px solid var(--secondary-color);
-  animation: pulse-glow 2s infinite;
-  animation-delay: 0.5s;
+  background: linear-gradient(45deg, #ff00ff, #00ffff);
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
+  opacity: 0.3;
   z-index: -1;
 }
 
@@ -124,10 +156,47 @@
   right: -10px;
   bottom: -10px;
   border-radius: 50%;
-  background: transparent;
-  border: 1px solid var(--secondary-color);
-  opacity: 0.5;
-  animation: pulse-glow 2s infinite;
-  animation-delay: 1s;
+  background: linear-gradient(45deg, #00ffff, #ff00ff);
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite reverse;
+  opacity: 0.2;
   z-index: -2;
+}
+
+.node-icon {
+  animation: node-glow 4s infinite;
+}
+
+.node-label {
+  background: linear-gradient(45deg, #ff00ff, #00ffff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-shift 3s ease infinite;
+}
+
+/* Add new styles for enhanced visual effects */
+.node-circuit {
+  background: linear-gradient(90deg, #ff00ff, #00ffff);
+  background-size: 200% 200%;
+  animation: gradient-shift 2s linear infinite;
+  box-shadow: 0 0 15px rgba(255, 0, 255, 0.5), 0 0 30px rgba(0, 255, 255, 0.5);
+}
+
+.cpu-legs {
+  background: linear-gradient(45deg, #ff00ff, #00ffff);
+  background-size: 200% 200%;
+  animation: gradient-shift 2s linear infinite;
+  box-shadow: 0 0 10px rgba(255, 0, 255, 0.5), 0 0 20px rgba(0, 255, 255, 0.5);
+}
+
+/* Add hover effects for interactive elements */
+.node:hover .node-circuit {
+  animation: gradient-shift 1s linear infinite;
+  box-shadow: 0 0 20px rgba(255, 0, 255, 0.7), 0 0 40px rgba(0, 255, 255, 0.7);
+}
+
+.node:hover .cpu-legs {
+  animation: gradient-shift 1s linear infinite;
+  box-shadow: 0 0 15px rgba(255, 0, 255, 0.7), 0 0 30px rgba(0, 255, 255, 0.7);
 }

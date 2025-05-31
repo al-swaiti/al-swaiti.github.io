@@ -20,6 +20,18 @@ Development, Python Scripting, Physics Instruction, Digital Art Creation, Linux 
     let currentText = '';
     let charIndex = 0;
     let roleHeaderElement = null;
+    let hasStartedAnimation = false;
+
+    // Function to activate terminal text color
+    function activateTerminalTextColor() {
+        const terminalText = document.getElementById('terminal-text');
+        if (terminalText) {
+            terminalText.classList.add('active');
+            terminalText.style.animation = 'terminal-text-pulse 2s infinite alternate';
+            terminalText.style.opacity = '1';
+            terminalText.style.visibility = 'visible';
+        }
+    }
 
     // Function to update role in terminal header with typing and reversing animation
     function updateRoleHeader() {
@@ -75,6 +87,9 @@ Development, Python Scripting, Physics Instruction, Digital Art Creation, Linux 
 
     // Override the startTypingAnimation function to use the updated bio text
     window.startTypingAnimation = function() {
+        if (hasStartedAnimation) return; // Prevent multiple starts
+        hasStartedAnimation = true;
+
         let i = 0;
         const typingSpeed = 30; // milliseconds per character
         const terminalText = document.getElementById('terminal-text');
@@ -84,6 +99,9 @@ Development, Python Scripting, Physics Instruction, Digital Art Creation, Linux 
         
         // Start the role header animation
         updateRoleHeader();
+        
+        // Activate terminal text color immediately
+        activateTerminalTextColor();
         
         function typeWriter() {
             if (i < bioText.length) {
@@ -107,22 +125,41 @@ Development, Python Scripting, Physics Instruction, Digital Art Creation, Linux 
         typeWriter();
     };
 
-    // If the page is already loaded and the terminal is visible, start the animation
+    // Create and set up the Intersection Observer
     const terminalContainer = document.querySelector('.terminal-container');
-    if (terminalContainer && getComputedStyle(terminalContainer).opacity !== '0' && getComputedStyle(terminalContainer).display !== 'none') {
-        // Create role header element
-        roleHeaderElement = document.createElement('div');
-        roleHeaderElement.className = 'terminal-role-header';
-        roleHeaderElement.style.display = 'none'; // Hide the element since there are no roles
-        const terminalText = document.getElementById('terminal-text');
-        if (terminalText) {
-            terminalText.parentNode.insertBefore(roleHeaderElement, terminalText);
-            
-            // Start role header animation
-            updateRoleHeader();
-            
-            // Start typing animation with new bio text
-            window.startTypingAnimation();
-        }
+    if (terminalContainer) {
+        // Make sure the terminal container is visible
+        terminalContainer.style.opacity = '1';
+        terminalContainer.style.visibility = 'visible';
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !hasStartedAnimation) {
+                    console.log('Terminal section is visible, starting animation');
+                    // Create role header element
+                    roleHeaderElement = document.createElement('div');
+                    roleHeaderElement.className = 'terminal-role-header';
+                    roleHeaderElement.style.display = 'none'; // Hide the element since there are no roles
+                    const terminalText = document.getElementById('terminal-text');
+                    if (terminalText) {
+                        terminalText.parentNode.insertBefore(roleHeaderElement, terminalText);
+                        
+                        // Start role header animation
+                        updateRoleHeader();
+                        
+                        // Start typing animation with new bio text
+                        window.startTypingAnimation();
+                        
+                        // Ensure terminal text color is active
+                        activateTerminalTextColor();
+                    }
+                }
+            });
+        }, {
+            threshold: 0.1, // Start animation when 10% of the terminal is visible
+            rootMargin: '0px' // No margin
+        });
+
+        observer.observe(terminalContainer);
     }
 });

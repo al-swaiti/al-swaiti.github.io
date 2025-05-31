@@ -818,169 +818,106 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Try to force start simulation after a short delay
     setTimeout(forceTryInitSimulation, 500);
+
+    // Initialize Vanta.js effect
+    let vantaEffect = null;
+    
+    function initVantaEffect() {
+        if (vantaEffect) vantaEffect.destroy();
+        
+        vantaEffect = VANTA.NET({
+            el: "#navigation-container",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0x14515f,
+            backgroundColor: 0x0,
+            maxDistance: 28.00,
+            spacing: 14.00
+        });
+    }
+
+    // Initialize Vanta effect when navigation becomes visible
+    if (navigationContainer) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    initVantaEffect();
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        observer.observe(navigationContainer);
+    }
+
+    // Clean up Vanta effect when navigation is hidden
+    function cleanupVantaEffect() {
+        if (vantaEffect) {
+            vantaEffect.destroy();
+            vantaEffect = null;
+        }
+    }
+
+    // Add cleanup to existing navigation hide logic
+    document.querySelectorAll('.node').forEach(function(node) {
+        node.addEventListener('click', function() {
+            cleanupVantaEffect();
+            // ... existing click handler code ...
+        });
+    });
+
+    // Create circuit connections that grow from the center
+    document.querySelectorAll('.node-circuit').forEach(function(circuit, index) {
+        // Get the node and set up the circuit
+        const node = circuit.closest('.node');
+        const sectionType = node.getAttribute('data-section');
+        
+        // Calculate coordinates for connections
+        const nodeRect = node.getBoundingClientRect();
+        const centerRect = baseSpinner.getBoundingClientRect();
+        
+        // Create circuit line that grows from center to node
+        const circuitLine = document.createElement('div');
+        circuitLine.className = `circuit-connection ${sectionType}`;
+        circuitLine.style.zIndex = '1'; // Ensure line is below spinners
+        navigationContainer.appendChild(circuitLine);
+        
+        // Position line to start from center
+        const centerX = centerRect.left + centerRect.width / 2;
+        const centerY = centerRect.top + centerRect.height / 2;
+        const nodeX = nodeRect.left + nodeRect.width / 2;
+        const nodeY = nodeRect.top + nodeRect.height / 2;
+        
+        // Calculate angle between center and node
+        const angle = Math.atan2(nodeY - centerY, nodeX - centerX) * 180 / Math.PI;
+        
+        // Position and rotate the circuit
+        circuitLine.style.top = `${centerY}px`;
+        circuitLine.style.left = `${centerX}px`;
+        circuitLine.style.transform = `rotate(${angle}deg)`;
+        
+        // Animate connection
+        circuit.style.animation = 'electrical-pulse 2s infinite 0.8s';
+    });
 });
 
 // Initialize CPU mind map visualization
 function initCPUMindMap() {
-    // Create canvas for CPU mind map if it doesn't exist
-    if (!document.getElementById('cpu-mindmap')) {
-        const canvas = document.createElement('canvas');
-        canvas.id = 'cpu-mindmap';
-        canvas.className = 'cpu-mindmap';
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        document.body.appendChild(canvas);
-        
-        // Size canvas appropriately on window resize
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-    }
-    
-    // Initialize neural nodes and connections
-    createNeuralNetwork();
-}
-
-// Create neural network nodes and connections
-function createNeuralNetwork() {
     const canvas = document.getElementById('cpu-mindmap');
     if (!canvas) return;
     
-    const ctx = canvas.getContext('2d');
-    const width = canvas.width;
-    const height = canvas.height;
+    // Set canvas dimensions
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
     
-    // Clear any existing nodes
-    neuralNodes = [];
-    neuralConnections = [];
-    
-    // Create random nodes across the screen
-    const nodeCount = 25;
-    for (let i = 0; i < nodeCount; i++) {
-        neuralNodes.push({
-            x: Math.random() * width,
-            y: Math.random() * height,
-            radius: 2 + Math.random() * 4,
-            color: `hsl(320, 100%, 75%)`,
-            pulse: 0,
-            speed: 0.2 + Math.random() * 0.5
-        });
-    }
-    
-    // Create connections between nodes (not all nodes will be connected)
-    const connectionCount = 35;
-    for (let i = 0; i < connectionCount; i++) {
-        const nodeA = Math.floor(Math.random() * nodeCount);
-        const nodeB = Math.floor(Math.random() * nodeCount);
-        
-        if (nodeA !== nodeB) {
-            neuralConnections.push({
-                nodeA: nodeA,
-                nodeB: nodeB,
-                width: 0.5 + Math.random(),
-                opacity: 0.1 + Math.random() * 0.4,
-                active: false
-            });
-        }
-    }
-}
-
-// Update CPU mind map visualization with audio data
-function updateCPUMindMap(bass, mid, treble) {
-    const canvas = document.getElementById('cpu-mindmap');
-    if (!canvas || !neuralNodes || !neuralConnections) return;
-    
-    const ctx = canvas.getContext('2d');
-    const width = canvas.width;
-    const height = canvas.height;
-    
-    // Clear canvas with fade effect for trails
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
-    ctx.fillRect(0, 0, width, height);
-    
-    // Update and draw nodes
-    neuralNodes.forEach((node, index) => {
-        // Move nodes slightly in a fluid motion
-        node.x += Math.sin(Date.now() * 0.001 * node.speed) * 0.5;
-        node.y += Math.cos(Date.now() * 0.0015 * node.speed) * 0.5;
-        
-        // Keep nodes within canvas bounds
-        if (node.x < 0) node.x = width;
-        if (node.x > width) node.x = 0;
-        if (node.y < 0) node.y = height;
-        if (node.y > height) node.y = 0;
-        
-        // Audio reactive pulse and color
-        const pulseFactor = bass * 0.7 + mid * 0.3;
-        node.pulse = Math.max(0, node.pulse - 0.05);
-        
-        // Randomly activate nodes based on bass hits
-        if (Math.random() < (bass * 0.3) && node.pulse < 0.2) {
-            node.pulse = 1;
-        }
-        
-        // Draw the node with glow effect
-        const pulseRadius = node.radius * (1 + node.pulse * 3);
-        const hue = 320 + (treble * 60);
-        
-        // Quantum plasma effect
-        ctx.beginPath();
-        const grd = ctx.createRadialGradient(
-            node.x, node.y, 0,
-            node.x, node.y, pulseRadius * 2
-        );
-        grd.addColorStop(0, `hsla(${hue}, 100%, 75%, ${0.8 + node.pulse * 0.2})`);
-        grd.addColorStop(1, `hsla(${hue}, 100%, 75%, 0)`);
-        
-        ctx.fillStyle = grd;
-        ctx.arc(node.x, node.y, pulseRadius * 2, 0, Math.PI * 2);
-        ctx.fill();
-        
-        // Draw node core
-        ctx.beginPath();
-        ctx.fillStyle = `hsl(${hue}, 100%, ${75 + (node.pulse * 25)}%)`;
-        ctx.arc(node.x, node.y, pulseRadius, 0, Math.PI * 2);
-        ctx.fill();
-    });
-    
-    // Draw connections between nodes
-    const maxDistance = 200 * (1 + bass);
-    
-    neuralConnections.forEach(conn => {
-        const nodeA = neuralNodes[conn.nodeA];
-        const nodeB = neuralNodes[conn.nodeB];
-        
-        // Calculate distance
-        const dx = nodeB.x - nodeA.x;
-        const dy = nodeB.y - nodeA.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        
-        // Only draw if nodes are close enough
-        if (distance < maxDistance) {
-            // Connection opacity based on distance and audio
-            const opacityFactor = 1 - (distance / maxDistance);
-            const pulseOpacity = Math.max(nodeA.pulse, nodeB.pulse);
-            const opacity = (conn.opacity * opacityFactor) + (pulseOpacity * 0.8);
-            
-            // Draw connection
-            ctx.beginPath();
-            ctx.strokeStyle = `hsla(320, 100%, 75%, ${opacity})`;
-            ctx.lineWidth = conn.width * (1 + (pulseOpacity * 2));
-            ctx.moveTo(nodeA.x, nodeA.y);
-            ctx.lineTo(nodeB.x, nodeB.y);
-            ctx.stroke();
-            
-            // Add glow effect to active connections
-            if (pulseOpacity > 0.5) {
-                ctx.beginPath();
-                ctx.strokeStyle = `hsla(320, 100%, 85%, ${opacity * 0.7})`;
-                ctx.lineWidth = conn.width * 3 * pulseOpacity;
-                ctx.moveTo(nodeA.x, nodeA.y);
-                ctx.lineTo(nodeB.x, nodeB.y);
-                ctx.stroke();
-            }
-        }
+    // Size canvas appropriately on window resize
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
     });
 }
 

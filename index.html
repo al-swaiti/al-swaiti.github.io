@@ -27,6 +27,8 @@
     <link rel="stylesheet" href="assets/css/audio-visualizer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Fira+Code:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=Roboto+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
 </head>
 <body>
     <!-- Intro Video Container -->
@@ -340,7 +342,7 @@
                             <h4>IBM & Coursera (August 2020)</h4>
                             <p>Advanced training in AI engineering, covering deep learning frameworks, neural networks, and AI model deployment.</p>
                             <div class="certificate-links">
-                                <a href="https://www.coursera.org/account/accomplishments/specialization/certificate/S899TD9673M3" target="_blank" class="cert-link">
+                                <a href="https://www.credly.com/earner/earned/badge/85743098-9529-47eb-b403-7785b040a35b" target="_blank" class="cert-link">
                                     <img src="assets/images/certificates/ibm-ai-engineering.png" alt="IBM AI Engineering Certificate" class="cert-image">
                                     <span>View Certificate</span>
                                 </a>
@@ -354,7 +356,7 @@
                             <h4>Google (May 2022)</h4>
                             <p>Mastered Python programming for IT automation, system administration, and process optimization.</p>
                             <div class="certificate-links">
-                                <a href="https://www.coursera.org/account/accomplishments/professional-cert/GOOGLE-IT" target="_blank" class="cert-link">
+                                <a href="https://coursera.org/share/02793dfa25f46dcac82526f0c73b90d5" target="_blank" class="cert-link">
                                     <img src="assets/images/certificates/google-it-automation.png" alt="Google IT Automation Certificate" class="cert-image">
                                     <span>View Certificate</span>
                                 </a>
@@ -372,7 +374,7 @@
                                     <img src="assets/images/certificates/miee-2020.png" alt="MIEE 2020-2021 Badge" class="cert-image">
                                     <span>2020-2021 Badge</span>
                                 </a>
-                                <a href="https://www.credly.com/earner/earned/share/3a94a239-95c7-4000-83e1-8074259ceb4f" target="_blank" class="cert-link">
+                                <a href="https://www.credly.com/badges/3a94a239-95c7-4000-83e1-8074259ceb4f/public_url" target="_blank" class="cert-link">
                                     <img src="assets/images/certificates/miee-2022.png" alt="MIEE 2022-2023 Badge" class="cert-image">
                                     <span>2022-2023 Badge</span>
                                 </a>
@@ -400,7 +402,7 @@
                             <h4>IBM & Coursera (February 2022)</h4>
                             <p>Advanced training in cybersecurity, including data protection, endpoint protection, SIEM, network security, threat intelligence, incident response, and digital forensics.</p>
                             <div class="certificate-links">
-                                <a href="https://www.coursera.org/account/accomplishments/professional-cert/CYBERSECURITY" target="_blank" class="cert-link">
+                                <a href="https://coursera.org/share/362b09bd4a6c83c6bb6a488ea78163c9" target="_blank" class="cert-link">
                                     <img src="assets/images/certificates/ibm-cybersecurity.png" alt="IBM Cybersecurity Certificate" class="cert-image">
                                     <span>View Certificate</span>
                                 </a>
@@ -420,7 +422,7 @@
                     <div class="arts-gallery">
                         <div class="art-item">
                             <div class="art-preview">
-                                <img src="assets/images/500306-artistic.jpg" alt="AI Art">
+                                <img src="assets/images/xxx.png" alt="AI Art">
                             </div>
                             <div class="art-details">
                                 <h3>AI-Generated Artwork</h3>
@@ -629,6 +631,12 @@
 
             // Play intro video and set up event listeners
             introVideo.play();
+            
+            // Set video duration to 5 seconds
+            introVideo.addEventListener('loadedmetadata', function() {
+                introVideo.currentTime = 0;
+                introVideo.playbackRate = introVideo.duration / 5; // Adjust playback rate to make video last 5 seconds
+            });
 
             // When intro video ends, show main content
             introVideo.addEventListener('ended', endIntro);
